@@ -36,6 +36,7 @@ dependencies {
     implementation(libs.constraintlayout)
     implementation(libs.android.networking)
     implementation(libs.android.spinkit)
+    implementation(libs.circleimageview)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

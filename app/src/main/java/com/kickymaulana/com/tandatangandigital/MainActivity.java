@@ -14,11 +14,12 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.androidnetworking.AndroidNetworking;
+import com.google.android.material.button.MaterialButton;
 import com.kickymaulana.com.tandatangandigital.sessionmanager.SessionManager;
 
 public class MainActivity extends AppCompatActivity {
 
-    TextView logout;
+    MaterialButton logout;
     SessionManager sessionManager;
 
     @Override
@@ -32,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        logout = (TextView) findViewById(R.id.logout);
+        logout = (MaterialButton) findViewById(R.id.logout);
         sessionManager = new SessionManager(MainActivity.this);
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
