@@ -14,6 +14,12 @@
         android:layout_marginEnd="20dp"
         android:orientation="vertical">
 
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:src="@drawable/outline_assignment_ind_24"/>
+
         <androidx.appcompat.widget.AppCompatTextView
             android:text="Tanda Tangan Digital"
             android:textSize="20dp"
@@ -46,6 +52,45 @@
             android:text="Login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:text="Implementasi Digital Signature Menggunakan Algoritma Rivers Shamir Adleman Pada Dokumen Elektronik"
+            android:textSize="12dp"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_height="wrap_content"/>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+            <androidx.appcompat.widget.AppCompatTextView
+                android:text="Tanda Tangani File"
+                android:textSize="12dp"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_marginEnd="5dp"
+                android:textColor="#6750A3"
+                android:textStyle="bold"
+                android:layout_height="wrap_content"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:text="Periksa Keaslian File"
+                android:textSize="12dp"
+                android:layout_width="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textColor="#6750A3"
+                android:textStyle="bold"
+                android:layout_height="wrap_content"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
