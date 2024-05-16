@@ -1,5 +1,6 @@
 package com.kickymaulana.com.tandatangandigital;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.QuickContactBadge;
@@ -13,10 +14,12 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.androidnetworking.AndroidNetworking;
+import com.kickymaulana.com.tandatangandigital.sessionmanager.SessionManager;
 
 public class MainActivity extends AppCompatActivity {
 
-    TextView testing;
+    TextView logout;
+    SessionManager sessionManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,11 +32,15 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        testing = (TextView) findViewById(R.id.testing);
-        testing.setOnClickListener(new View.OnClickListener() {
+        logout = (TextView) findViewById(R.id.logout);
+        sessionManager = new SessionManager(MainActivity.this);
+        logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "testing", Toast.LENGTH_SHORT).show();
+                sessionManager.logout();
+                Intent intent = new Intent(MainActivity.this, Login.class);
+                startActivity(intent);
+                finish();
             }
         });
 

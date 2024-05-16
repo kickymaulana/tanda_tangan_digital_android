@@ -55,6 +55,13 @@ public class Login extends AppCompatActivity {
         loading = (RelativeLayout) findViewById(R.id.loading);
         sessionManager = new SessionManager(Login.this);
 
+        if (!sessionManager.getUsername().equals("kosong")){
+            Intent intent = new Intent(Login.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
+
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,8 +78,12 @@ public class Login extends AppCompatActivity {
                                 Log.d("RESPONSE", response.toString());
                                 try {
                                     if (response.get("kode").equals("200")) {
-                                        Toast.makeText(Login.this, "kamu berhasil login", Toast.LENGTH_SHORT).show();
                                         loading.setVisibility(View.GONE);
+                                        sessionManager.setUsername(response.getJSONObject("data").getJSONObject("user").get("email").toString());
+                                        sessionManager.setToken(response.getJSONObject("data").get("token").toString());
+                                        Intent intent = new Intent(Login.this, MainActivity.class);
+                                        startActivity(intent);
+                                        finish();
                                     } else if (response.get("kode").equals("411")) {
                                         String[] rule = {"email", "password"};
                                         String pesanvalidasi = new PesanValidasi(rule, response).getpesan();
