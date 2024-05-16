@@ -22,6 +22,7 @@ import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONArrayRequestListener;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.google.android.material.button.MaterialButton;
+import com.kickymaulana.com.tandatangandigital.sessionmanager.SessionManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,8 +35,8 @@ public class Login extends AppCompatActivity {
     AppCompatEditText email;
     AppCompatEditText password;
     MaterialButton login;
-
     RelativeLayout loading;
+    SessionManager sessionManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,13 +53,14 @@ public class Login extends AppCompatActivity {
         password = (AppCompatEditText) findViewById(R.id.password);
         login = (MaterialButton) findViewById(R.id.login);
         loading = (RelativeLayout) findViewById(R.id.loading);
+        sessionManager = new SessionManager(Login.this);
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 loading.setVisibility(View.VISIBLE);
-                AndroidNetworking.post("https://1287-103-138-218-82.ngrok-free.app/tanda_tangan_digital_laravel/public/api/login")
+                AndroidNetworking.post(sessionManager.getServer() + "api/login")
                         .addBodyParameter("email", Objects.requireNonNull(email.getText()).toString())
                         .addBodyParameter("password", Objects.requireNonNull(password.getText()).toString())
                         .setPriority(Priority.MEDIUM)
@@ -78,7 +80,11 @@ public class Login extends AppCompatActivity {
                                         new AlertDialog.Builder(Login.this)
                                                 .setMessage(pesanvalidasi)
                                                 .show();
-
+                                    } else if (response.get("kode").equals("406")){
+                                        loading.setVisibility(View.GONE);
+                                        new AlertDialog.Builder(Login.this)
+                                                .setMessage(response.get("pesan").toString())
+                                                .show();
 
                                     }
                                 } catch (JSONException e) {
