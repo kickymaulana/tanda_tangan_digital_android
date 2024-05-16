@@ -67,55 +67,14 @@
                     android:layout_marginBottom="10dp"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:text="Nama Formal (sesuai SK terakhir)"
+                    android:text="Email"
                     android:textSize="14sp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textStyle="italic"/>
+                    android:textStyle="italic" />
                 <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/nama_formal"
-                    android:text="Jaringan tidak normal"
                     android:textSize="14sp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/edit_text_bundar"
-                    android:layout_marginBottom="10dp"/>
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:text="Jenis kelamin"
-                    android:textSize="14sp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textStyle="italic"/>
-                <RadioGroup
-                    android:id="@+id/radiogroup"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginBottom="10dp">
-                    <RadioButton
-                        android:id="@+id/lakilaki"
-                        android:text="Laki-Laki"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="20dp"/>
-                    <RadioButton
-                        android:id="@+id/perempuan"
-                        android:text="Perempuan"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                </RadioGroup>
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:text="NIP"
-                    android:textSize="14sp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textStyle="italic"/>
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/nip"
-                    android:text="-"
-                    android:textSize="14sp"
+                    android:text="kickymaulana@gmail.com"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/edit_text_bundar"
@@ -131,14 +90,13 @@
                         android:layout_marginEnd="20dp"
                         android:orientation="vertical">
                         <androidx.appcompat.widget.AppCompatTextView
-                            android:text="Tanggal Lahir"
+                            android:text="Public Key e"
                             android:textSize="14sp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textStyle="italic"/>
                         <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/tanggal_lahir"
-                            android:text="2023-05-10"
+                            android:text="23434"
                             android:textSize="14sp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -152,14 +110,60 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
                         <androidx.appcompat.widget.AppCompatTextView
-                            android:text="Pangkat"
+                            android:text="Public Key n"
                             android:textSize="14sp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textStyle="italic"/>
                         <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/pangkat"
-                            android:text="Belum pilih"
+                            android:text="234234"
+                            android:textSize="14sp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/edit_text_bundar"
+                            android:layout_marginBottom="10dp"/>
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="140dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="20dp"
+                        android:orientation="vertical">
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:text="Private Key d"
+                            android:textSize="14sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textStyle="italic"/>
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:text="55343"
+                            android:textSize="14sp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/edit_text_bundar"
+                            android:layout_marginBottom="10dp"/>
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:text="Private Key n"
+                            android:textSize="14sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textStyle="italic"/>
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:text="234234"
                             android:textSize="14sp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -171,92 +175,6 @@
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:text="Jabatan"
-                    android:textSize="14sp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textStyle="italic"/>
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/jabatan"
-                    android:text="Jaringan tidak normal"
-                    android:textSize="14sp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/edit_text_bundar"
-                    android:layout_marginBottom="10dp"/>
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:text="Unit Kerja"
-                    android:textSize="14sp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textStyle="italic"/>
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/unit_kerja"
-                    android:text="Jaringan tidak normal"
-                    android:textSize="14sp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/edit_text_bundar"
-                    android:layout_marginBottom="10dp"/>
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:text="Kecamatan (tempat kerja)"
-                    android:textSize="14sp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textStyle="italic"/>
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/kecamatan"
-                    android:textSize="14sp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/edit_text_bundar"
-                    android:layout_marginBottom="10dp"/>
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:text="Email"
-                    android:textSize="14sp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textStyle="italic"/>
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/email"
-                    android:text="Jaringan tidak normal"
-                    android:textSize="14sp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/edit_text_bundar"
-                    android:layout_marginBottom="10dp"/>
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:text="Level"
-                    android:textSize="14sp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textStyle="italic"/>
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/level"
-                    android:text="user"
-                    android:textSize="14sp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/edit_text_bundar"
-                    android:layout_marginBottom="10dp"/>
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:text="Status Pegawai"
-                    android:textSize="14sp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textStyle="italic"/>
-
-                <androidx.appcompat.widget.AppCompatSpinner
-                    android:id="@+id/status_pegawai"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/edit_text_bundar"
-                    android:layout_marginBottom="10dp"/>
 
 
                 <com.google.android.material.button.MaterialButton
