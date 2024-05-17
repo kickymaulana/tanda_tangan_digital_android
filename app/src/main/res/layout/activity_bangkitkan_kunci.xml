@@ -150,7 +150,8 @@
                     android:layout_marginBottom="10dp"/>
 
                 <com.google.android.material.button.MaterialButton
-                    android:text="Hitung Public dan Private Key"
+                    android:id="@+id/hitung_nilai_d"
+                    android:text="Hitung nilai d"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:cornerRadius="50dp"
@@ -158,6 +159,29 @@
                     android:padding="10dp"
                     android:textSize="18sp"
                     android:textAllCaps="false"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:text="d = 1 + (k x f(n)) / e"
+                    android:textSize="14sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:textStyle="italic"/>
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:text="Nilai k akan dinaikan dari 1, 2, 3 dan seterusnya sampai didapati nilai d adalah bilangan bulat.\nSetelah proses perulangan beberapa kali, maka didapat nilai d adalah"
+
+                    android:textSize="14sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="italic"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/nilai_d"
+                    android:textSize="14sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:textStyle="italic"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:text="hasil pasangan kunci publik dan kunci privat"

@@ -18,6 +18,9 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.material.button.MaterialButton;
 import com.kickymaulana.com.tandatangandigital.penolong.BilanganPrimaHelper;
+import com.kickymaulana.com.tandatangandigital.penolong.KunciDeskripsiHelper;
+
+import java.math.BigInteger;
 
 public class BangkitkanKunci extends AppCompatActivity {
 
@@ -39,6 +42,18 @@ public class BangkitkanKunci extends AppCompatActivity {
     AppCompatTextView pilih_bilangan_e;
     ActivityResultLauncher<Intent> pilih_bilangan_relatif_prima_e_launcher;
     AppCompatTextView pilih_bilangan_relatif_prima_e;
+
+    MaterialButton hitung_nilai_d;
+
+
+    BigInteger e_big;
+    BigInteger d_big;
+    BigInteger f_n_big;
+    BigInteger p_big;
+    BigInteger q_big;
+    BigInteger n_big;
+
+    AppCompatTextView nilai_d;
 
 
     @Override
@@ -132,6 +147,22 @@ public class BangkitkanKunci extends AppCompatActivity {
                 String fn_s = String.valueOf(fn);
                 intent.putExtra("fn", fn_s);
                 pilih_bilangan_relatif_prima_e_launcher.launch(intent);
+
+            }
+        });
+        nilai_d = (AppCompatTextView) findViewById(R.id.nilai_d);
+        hitung_nilai_d = (MaterialButton) findViewById(R.id.hitung_nilai_d);
+        hitung_nilai_d.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                e_big = new BigInteger(bilangan_relatif_prima_e_s);
+                p_big = new BigInteger(String.valueOf(p));
+                q_big = new BigInteger(String.valueOf(q));
+                n_big = p_big.multiply(q_big);
+                f_n_big = p_big.subtract(new BigInteger("1")).multiply(q_big.subtract(new BigInteger("1")));
+                KunciDeskripsiHelper kunciDeskripsi = new KunciDeskripsiHelper();
+                d_big = kunciDeskripsi.jalankan(f_n_big, e_big);
+                nilai_d.setText(String.valueOf(d_big));
 
             }
         });
