@@ -54,6 +54,7 @@ public class BangkitkanKunci extends AppCompatActivity {
     BigInteger n_big;
 
     AppCompatTextView nilai_d;
+    AppCompatTextView hasil_e, hasil_d, hasil_n1, hasil_n2;
 
 
     @Override
@@ -152,6 +153,10 @@ public class BangkitkanKunci extends AppCompatActivity {
         });
         nilai_d = (AppCompatTextView) findViewById(R.id.nilai_d);
         hitung_nilai_d = (MaterialButton) findViewById(R.id.hitung_nilai_d);
+        hasil_e = (AppCompatTextView) findViewById(R.id.hasil_e);
+        hasil_d = (AppCompatTextView) findViewById(R.id.hasil_d);
+        hasil_n1 = (AppCompatTextView) findViewById(R.id.hasil_n1);
+        hasil_n2 = (AppCompatTextView) findViewById(R.id.hasil_n2);
         hitung_nilai_d.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -163,6 +168,11 @@ public class BangkitkanKunci extends AppCompatActivity {
                 KunciDeskripsiHelper kunciDeskripsi = new KunciDeskripsiHelper();
                 d_big = kunciDeskripsi.jalankan(f_n_big, e_big);
                 nilai_d.setText(String.valueOf(d_big));
+
+                hasil_e.setText(String.valueOf(e_big));
+                hasil_d.setText(String.valueOf(d_big));
+                hasil_n1.setText(String.valueOf(n_big));
+                hasil_n2.setText(String.valueOf(n_big));
 
             }
         });

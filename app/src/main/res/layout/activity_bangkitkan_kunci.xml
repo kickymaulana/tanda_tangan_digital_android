@@ -208,7 +208,8 @@
                             android:layout_height="wrap_content"
                             android:textStyle="italic"/>
                         <androidx.appcompat.widget.AppCompatTextView
-                            android:text="23434"
+                            android:id="@+id/hasil_e"
+                            android:text="0"
                             android:textSize="14sp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -228,7 +229,8 @@
                             android:layout_height="wrap_content"
                             android:textStyle="italic"/>
                         <androidx.appcompat.widget.AppCompatTextView
-                            android:text="234234"
+                            android:id="@+id/hasil_n1"
+                            android:text="0"
                             android:textSize="14sp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -255,7 +257,8 @@
                             android:layout_height="wrap_content"
                             android:textStyle="italic"/>
                         <androidx.appcompat.widget.AppCompatTextView
-                            android:text="55343"
+                            android:id="@+id/hasil_d"
+                            android:text="0"
                             android:textSize="14sp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -275,7 +278,8 @@
                             android:layout_height="wrap_content"
                             android:textStyle="italic"/>
                         <androidx.appcompat.widget.AppCompatTextView
-                            android:text="234234"
+                            android:id="@+id/hasil_n2"
+                            android:text="0"
                             android:textSize="14sp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
