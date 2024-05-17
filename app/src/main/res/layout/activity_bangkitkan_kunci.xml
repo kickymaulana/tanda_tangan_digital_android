@@ -69,6 +69,7 @@
                             android:layout_height="wrap_content"
                             android:textStyle="italic"/>
                         <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/pilih_bilangan_prima_q"
                             android:text="pilih bilangan"
                             android:textSize="14sp"
                             android:layout_width="match_parent"

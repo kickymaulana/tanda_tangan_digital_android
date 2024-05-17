@@ -23,8 +23,11 @@ public class BangkitkanKunci extends AppCompatActivity {
 
     MaterialButton hitung_nilai_fn;
     AppCompatTextView pilih_bilangan_prima_p;
-    ActivityResultLauncher<Intent> bilangan_prima_launcher;
+    ActivityResultLauncher<Intent> bilangan_prima_p_launcher;
+    String bilangan_prima_p_s;
 
+    AppCompatTextView pilih_bilangan_prima_q;
+    ActivityResultLauncher<Intent> bilangan_prima_q_launcher;
     String bilangan_prima_q_s;
 
 
@@ -50,12 +53,12 @@ public class BangkitkanKunci extends AppCompatActivity {
 
         pilih_bilangan_prima_p = (AppCompatTextView) findViewById(R.id.pilih_bilangan_prima_p);
 
-        bilangan_prima_launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+        bilangan_prima_p_launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
             public void onActivityResult(ActivityResult result) {
                 if (result.getResultCode() == RESULT_OK){
-                    bilangan_prima_q_s = result.getData().getStringExtra("bilangan_prima");
-                    pilih_bilangan_prima_p.setText(bilangan_prima_q_s);
+                    bilangan_prima_p_s = result.getData().getStringExtra("bilangan_prima");
+                    pilih_bilangan_prima_p.setText(bilangan_prima_p_s);
                 }
 
             }
@@ -64,7 +67,27 @@ public class BangkitkanKunci extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(BangkitkanKunci.this, BilanganPrima.class);
-                bilangan_prima_launcher.launch(intent);
+                bilangan_prima_p_launcher.launch(intent);
+            }
+        });
+
+        pilih_bilangan_prima_q = (AppCompatTextView) findViewById(R.id.pilih_bilangan_prima_q);
+
+        bilangan_prima_q_launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+            @Override
+            public void onActivityResult(ActivityResult result) {
+                if (result.getResultCode() == RESULT_OK){
+                    bilangan_prima_q_s = result.getData().getStringExtra("bilangan_prima");
+                    pilih_bilangan_prima_q.setText(bilangan_prima_q_s);
+                }
+
+            }
+        });
+        pilih_bilangan_prima_q.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(BangkitkanKunci.this, BilanganPrima.class);
+                bilangan_prima_q_launcher.launch(intent);
             }
         });
     }
