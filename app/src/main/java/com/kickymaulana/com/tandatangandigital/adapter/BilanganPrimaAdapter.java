@@ -13,6 +13,7 @@ import androidx.appcompat.widget.AppCompatTextView;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.kickymaulana.com.tandatangandigital.BilanganPrima;
 import com.kickymaulana.com.tandatangandigital.R;
 import com.kickymaulana.com.tandatangandigital.model.BilanganPrimaModel;
 
@@ -42,11 +43,10 @@ public class BilanganPrimaAdapter extends RecyclerView.Adapter<BilanganPrimaAdap
         holder.card_bilangan_prima.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*Intent intent = new Intent();
-                intent.putExtra("id", kecamatanModelList.get(position).getId());
-                intent.putExtra("kecamatan", kecamatanModelList.get(position).getKecamatan());
-                ((KecamatanPilih) context).setResult(RESULT_OK, intent);
-                ((KecamatanPilih) context).finish();*/
+                Intent intent = new Intent();
+                intent.putExtra("bilangan_prima", bilanganPrimaModelList.get(position).getBilangan_prima());
+                ((BilanganPrima) context).setResult(RESULT_OK, intent);
+                ((BilanganPrima) context).finish();
 
             }
         });

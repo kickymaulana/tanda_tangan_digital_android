@@ -1,5 +1,6 @@
 package com.kickymaulana.com.tandatangandigital;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -7,6 +8,10 @@ import android.view.View;
 import android.widget.RelativeLayout;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.cardview.widget.CardView;
@@ -33,6 +38,7 @@ public class BilanganPrima extends AppCompatActivity {
     RecyclerView recyclerView;
     RelativeLayout loading;
     SessionManager sessionManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +88,7 @@ public class BilanganPrima extends AppCompatActivity {
         loading.setVisibility(View.GONE);
 
     }
+
 
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemid = item.getItemId();

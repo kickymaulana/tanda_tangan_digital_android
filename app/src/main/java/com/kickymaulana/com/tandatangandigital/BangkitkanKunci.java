@@ -6,6 +6,10 @@ import android.util.Log;
 import android.view.View;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.core.graphics.Insets;
@@ -19,6 +23,9 @@ public class BangkitkanKunci extends AppCompatActivity {
 
     MaterialButton hitung_nilai_fn;
     AppCompatTextView pilih_bilangan_prima_p;
+    ActivityResultLauncher<Intent> bilangan_prima_launcher;
+
+    String bilangan_prima_q_s;
 
 
     @Override
@@ -42,11 +49,22 @@ public class BangkitkanKunci extends AppCompatActivity {
         });
 
         pilih_bilangan_prima_p = (AppCompatTextView) findViewById(R.id.pilih_bilangan_prima_p);
+
+        bilangan_prima_launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+            @Override
+            public void onActivityResult(ActivityResult result) {
+                if (result.getResultCode() == RESULT_OK){
+                    bilangan_prima_q_s = result.getData().getStringExtra("bilangan_prima");
+                    pilih_bilangan_prima_p.setText(bilangan_prima_q_s);
+                }
+
+            }
+        });
         pilih_bilangan_prima_p.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(BangkitkanKunci.this, BilanganPrima.class);
-                startActivity(intent);
+                bilangan_prima_launcher.launch(intent);
             }
         });
     }
