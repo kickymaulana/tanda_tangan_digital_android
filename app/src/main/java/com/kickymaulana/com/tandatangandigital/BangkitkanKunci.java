@@ -28,6 +28,7 @@ public class BangkitkanKunci extends AppCompatActivity {
     AppCompatTextView pilih_bilangan_prima_q;
     ActivityResultLauncher<Intent> bilangan_prima_q_launcher;
     String bilangan_prima_q_s;
+    String bilangan_relatif_prima_e_s;
 
     MaterialButton lengkapi_rumus;
     Integer p, q, n, fn;
@@ -35,7 +36,9 @@ public class BangkitkanKunci extends AppCompatActivity {
     AppCompatTextView rumus_n;
     AppCompatTextView rumus_fn;
 
-    AppCompatTextView pilih_bilangan_prima_e;
+    AppCompatTextView pilih_bilangan_e;
+    ActivityResultLauncher<Intent> pilih_bilangan_relatif_prima_e_launcher;
+    AppCompatTextView pilih_bilangan_relatif_prima_e;
 
 
     @Override
@@ -94,7 +97,7 @@ public class BangkitkanKunci extends AppCompatActivity {
         rumus_n = (AppCompatTextView) findViewById(R.id.rumus_n);
         rumus_fn = (AppCompatTextView) findViewById(R.id.rumus_fn);
 
-        pilih_bilangan_prima_e = (AppCompatTextView) findViewById(R.id.pilih_bilangan_e);
+        pilih_bilangan_e = (AppCompatTextView) findViewById(R.id.pilih_bilangan_e);
         lengkapi_rumus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -105,9 +108,33 @@ public class BangkitkanKunci extends AppCompatActivity {
                 rumus_n.setText("n = p x q = " + p + " x " + q + " = " + n);
                 fn = (p-1) * (q-1);
                 rumus_fn.setText("f(n) = (" + p + " - 1) x (" + q + " - 1) = " + fn);
-                pilih_bilangan_prima_e.setText("Pilih satu bilangan(e) yang relatif prima terhadap nilai f(n) = " + fn);
+                pilih_bilangan_e.setText("Pilih satu bilangan(e) yang relatif prima terhadap nilai f(n) = " + fn);
 
             }
         });
+
+        pilih_bilangan_relatif_prima_e_launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+            @Override
+            public void onActivityResult(ActivityResult result) {
+                if (result.getResultCode() == RESULT_OK){
+                    bilangan_relatif_prima_e_s = result.getData().getStringExtra("bilangan_relatif_prima");
+                    pilih_bilangan_relatif_prima_e.setText(bilangan_relatif_prima_e_s);
+                }
+
+            }
+        });
+
+        pilih_bilangan_relatif_prima_e = (AppCompatTextView) findViewById(R.id.pilih_bilangan_relatif_prima_e);
+        pilih_bilangan_relatif_prima_e.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(BangkitkanKunci.this, BilanganRelatifPrima.class);
+                String fn_s = String.valueOf(fn);
+                intent.putExtra("fn", fn_s);
+                pilih_bilangan_relatif_prima_e_launcher.launch(intent);
+
+            }
+        });
+
     }
 }
