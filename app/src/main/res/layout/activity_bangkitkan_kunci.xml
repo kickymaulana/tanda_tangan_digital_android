@@ -48,6 +48,7 @@
                             android:layout_height="wrap_content"
                             android:textStyle="italic"/>
                         <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/pilih_bilangan_prima_p"
                             android:text="pilih bilangan"
                             android:textSize="14sp"
                             android:layout_width="match_parent"
@@ -101,6 +102,7 @@
                     android:layout_marginBottom="10dp"/>
 
                 <com.google.android.material.button.MaterialButton
+                    android:id="@+id/hitung_nilai_fn"
                     android:text="Hitung nilai f(n)"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
