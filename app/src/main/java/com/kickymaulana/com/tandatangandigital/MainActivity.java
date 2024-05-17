@@ -20,6 +20,7 @@ import com.kickymaulana.com.tandatangandigital.sessionmanager.SessionManager;
 public class MainActivity extends AppCompatActivity {
 
     MaterialButton logout;
+    MaterialButton bangkitkan_kunci;
     SessionManager sessionManager;
 
     @Override
@@ -31,6 +32,15 @@ public class MainActivity extends AppCompatActivity {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
+        });
+
+        bangkitkan_kunci = (MaterialButton) findViewById(R.id.bangkitkan_kunci);
+        bangkitkan_kunci.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, BangkitkanKunci.class);
+                startActivity(intent);
+            }
         });
 
         logout = (MaterialButton) findViewById(R.id.logout);
