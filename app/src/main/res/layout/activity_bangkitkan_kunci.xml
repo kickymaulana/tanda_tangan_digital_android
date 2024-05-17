@@ -80,8 +80,20 @@
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/lengkapi_rumus"
+                    android:text="Hitung Rumus"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cornerRadius="50dp"
+                    app:iconGravity="textStart"
+                    android:padding="10dp"
+                    android:textSize="18sp"
+                    android:layout_marginBottom="20dp"
+                    android:textAllCaps="false"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/rumus_p"
                     android:text="p = -, q = -"
                     android:textSize="14sp"
                     android:layout_width="match_parent"
@@ -89,6 +101,7 @@
                     android:layout_marginBottom="10dp"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/rumus_n"
                     android:text="n = p x q = - x - = -"
                     android:textSize="14sp"
                     android:layout_width="match_parent"
@@ -102,18 +115,17 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"/>
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/hitung_nilai_fn"
-                    android:text="Hitung nilai f(n)"
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/rumus_fn"
+                    android:text="f(n) = (p-1) x (q-1)"
+                    android:textSize="14sp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:cornerRadius="50dp"
-                    app:iconGravity="textStart"
-                    android:padding="10dp"
-                    android:textSize="18sp"
-                    android:textAllCaps="false"/>
+                    android:layout_marginBottom="10dp"/>
+
 
                 <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/pilih_bilangan_e"
                     android:text="Pilih satu bilangan(e) yang relatif prima terhadap nilai f(n)"
                     android:textSize="14sp"
                     android:layout_width="match_parent"

@@ -21,7 +21,6 @@ import com.kickymaulana.com.tandatangandigital.penolong.BilanganPrimaHelper;
 
 public class BangkitkanKunci extends AppCompatActivity {
 
-    MaterialButton hitung_nilai_fn;
     AppCompatTextView pilih_bilangan_prima_p;
     ActivityResultLauncher<Intent> bilangan_prima_p_launcher;
     String bilangan_prima_p_s;
@@ -29,6 +28,14 @@ public class BangkitkanKunci extends AppCompatActivity {
     AppCompatTextView pilih_bilangan_prima_q;
     ActivityResultLauncher<Intent> bilangan_prima_q_launcher;
     String bilangan_prima_q_s;
+
+    MaterialButton lengkapi_rumus;
+    Integer p, q, n, fn;
+    AppCompatTextView rumus_p;
+    AppCompatTextView rumus_n;
+    AppCompatTextView rumus_fn;
+
+    AppCompatTextView pilih_bilangan_prima_e;
 
 
     @Override
@@ -40,15 +47,6 @@ public class BangkitkanKunci extends AppCompatActivity {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
-        });
-
-        hitung_nilai_fn = (MaterialButton) findViewById(R.id.hitung_nilai_fn);
-        hitung_nilai_fn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                BilanganPrimaHelper bilanganPrimaHelper = new BilanganPrimaHelper();
-                Log.d("BILANGAN PRIMA", bilanganPrimaHelper.tampilkan());
-            }
         });
 
         pilih_bilangan_prima_p = (AppCompatTextView) findViewById(R.id.pilih_bilangan_prima_p);
@@ -88,6 +86,27 @@ public class BangkitkanKunci extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(BangkitkanKunci.this, BilanganPrima.class);
                 bilangan_prima_q_launcher.launch(intent);
+            }
+        });
+
+        lengkapi_rumus = (MaterialButton) findViewById(R.id.lengkapi_rumus);
+        rumus_p = (AppCompatTextView) findViewById(R.id.rumus_p);
+        rumus_n = (AppCompatTextView) findViewById(R.id.rumus_n);
+        rumus_fn = (AppCompatTextView) findViewById(R.id.rumus_fn);
+
+        pilih_bilangan_prima_e = (AppCompatTextView) findViewById(R.id.pilih_bilangan_e);
+        lengkapi_rumus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                p = Integer.valueOf(bilangan_prima_p_s);
+                q = Integer.valueOf(bilangan_prima_q_s);
+                rumus_p.setText("p = " + p + ", q = " + q);
+                n = p * q;
+                rumus_n.setText("n = p x q = " + p + " x " + q + " = " + n);
+                fn = (p-1) * (q-1);
+                rumus_fn.setText("f(n) = (" + p + " - 1) x (" + q + " - 1) = " + fn);
+                pilih_bilangan_prima_e.setText("Pilih satu bilangan(e) yang relatif prima terhadap nilai f(n) = " + fn);
+
             }
         });
     }
