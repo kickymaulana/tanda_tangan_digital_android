@@ -1,39 +1,72 @@
 package com.kickymaulana.com.tandatangandigital;
 
+import android.Manifest;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.DatePickerDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.storage.StorageManager;
+import android.os.storage.StorageVolume;
 import android.provider.DocumentsContract;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatTextView;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.atwa.filepicker.core.FilePicker;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.button.MaterialButton;
+import com.karan.churi.PermissionManager.PermissionManager;
 import com.kickymaulana.com.tandatangandigital.penolong.HashFileHelper;
+import com.kickymaulana.com.tandatangandigital.penolong.ImageUriToFile;
 
 import android.net.Uri;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedWriter;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.math.BigInteger;
+import java.util.BitSet;
+import java.util.Objects;
 
 import es.voghdev.pdfviewpager.library.RemotePDFViewPager;
 import es.voghdev.pdfviewpager.library.adapter.PDFPagerAdapter;
+import me.rosuh.filepicker.config.FilePickerManager;
 
 
 public class TandaTanganiDokumen extends AppCompatActivity {
@@ -49,7 +82,17 @@ public class TandaTanganiDokumen extends AppCompatActivity {
     AppCompatEditText bilangan_d;
     AppCompatEditText bilangan_n;
 
+    private static final String PERMISSON_READ_EXTERNAL_STORAGE = Manifest.permission.READ_EXTERNAL_STORAGE;
 
+    private static final int PERMISSON_REQ_CODE = 100;
+
+    private ActivityResultLauncher<Intent> launcher; // Initialise this object in Activity.onCreate()
+    private Uri baseDocumentTreeUri;
+
+    public void launchBaseDirectoryPicker() {
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
+        launcher.launch(intent);
+    }
 
 
     @Override
@@ -63,6 +106,9 @@ public class TandaTanganiDokumen extends AppCompatActivity {
             return insets;
         });
 
+        requestRuntimePermission();
+
+
         MaterialToolbar toolbar = (MaterialToolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -73,11 +119,41 @@ public class TandaTanganiDokumen extends AppCompatActivity {
         bilangan_n = (AppCompatEditText) findViewById(R.id.bilangan_n);
 
 
-
         tandatangani_dokumen = (MaterialButton) findViewById(R.id.tandatangani_dokumen);
         tandatangani_dokumen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                StorageManager storageManager = (StorageManager) getSystemService(STORAGE_SERVICE);
+                StorageVolume storageVolume = storageManager.getStorageVolumes().get(0);
+                /*File fileInputImage = null;
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
+                    fileInputImage = new File(storageVolume.getDirectory().getPath() + "/Download/images.png");
+                }
+                Bitmap bitmapInputImage = BitmapFactory.decodeFile(fileInputImage.getPath());
+
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                bitmapInputImage.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+                byte[] bytesArray = byteArrayOutputStream.toByteArray();*/
+
+                /*File fileOutput = null;
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
+                    fileOutput = new File(storageVolume.getDirectory().getPath() + "/Download/image1.png");
+                }
+                FileOutputStream fileOutputStream = null;
+                try {
+                    fileOutputStream = new FileOutputStream(fileOutput);
+                    try {
+                        fileOutputStream.write(bytesArray);
+                        fileOutputStream.close();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                } catch (FileNotFoundException e) {
+                    throw new RuntimeException(e);
+                }*/
+
+
                 HashFileHelper hashFile = new HashFileHelper();
                 hasil_hash = hashFile.hash_file(s_link_pdf);
                 Log.d("HASIL_HASH", hasil_hash);
@@ -90,7 +166,7 @@ public class TandaTanganiDokumen extends AppCompatActivity {
                     String kode_ascii3digit = String.format("%03d", kode_ascii);
                     BigInteger m = new BigInteger(kode_ascii3digit);
                     BigInteger c = m.modPow(d_big, n_big);
-                    if (i < hasil_hash.length() - 1){
+                    if (i < hasil_hash.length() - 1) {
                         chipertext = chipertext + c.intValue() + ".";
                     } else {
                         chipertext = chipertext + c.intValue();
@@ -104,6 +180,22 @@ public class TandaTanganiDokumen extends AppCompatActivity {
                     JSONObject finalObject = new JSONObject();
                     finalObject.put("signature", signatureObject);
                     Log.d("FINALOBJECT", finalObject.toString());
+                    //menyimpan file di folder download
+                    File gpxfile = null;
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
+                        File namafile = new File(s_link_pdf);
+                        Log.d("NAMAFILE", namafile.getName());
+                        gpxfile = new File(storageVolume.getDirectory().getPath() + "/Download/", namafile.getName() + ".txt");
+                    }
+                    FileWriter writer = null;
+                    try {
+                        writer = new FileWriter(gpxfile);
+                        writer.append(finalObject.toString());
+                        writer.flush();
+                        writer.close();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 } catch (JSONException e) {
                     throw new RuntimeException(e);
                 }
@@ -138,27 +230,17 @@ public class TandaTanganiDokumen extends AppCompatActivity {
         pilih_dokumen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-                intent.addCategory(Intent.CATEGORY_OPENABLE);
-                intent.setType("application/pdf");
-                startActivityForResult(intent, PICK_PDF_FILE);
+                FilePickerManager
+                        .from(TandaTanganiDokumen.this)
+                        .forResult(FilePickerManager.REQUEST_CODE);
+
             }
         });
 
 
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PICK_PDF_FILE && resultCode == RESULT_OK) {
-            if (data != null) {
-                Uri uri = data.getData();
-                s_link_pdf = uri.getPath();
-                nama_file.setText(uri.getPath());
-            }
-        }
-    }
+
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemid = item.getItemId();
         if (itemid == android.R.id.home) {
@@ -166,4 +248,84 @@ public class TandaTanganiDokumen extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    private void requestRuntimePermission(){
+        if (ActivityCompat.checkSelfPermission(this, PERMISSON_READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
+            Toast.makeText(this, "Permission Granted kamu di izin kan menggunakan fitur ini", Toast.LENGTH_SHORT).show();
+        } else if(ActivityCompat.shouldShowRequestPermissionRationale(this, PERMISSON_READ_EXTERNAL_STORAGE)){
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("fitur ini membutuhkan izin read external storage")
+                    .setTitle("permission dibutuhkan")
+                    .setCancelable(false)
+                    .setPositiveButton("Oke", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            ActivityCompat.requestPermissions(TandaTanganiDokumen.this, new String[]{PERMISSON_READ_EXTERNAL_STORAGE}, PERMISSON_REQ_CODE);
+                            dialog.dismiss();
+
+                        }
+                    })
+                    .setNegativeButton("batal", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    })
+                    .show();
+        } else {
+            ActivityCompat.requestPermissions(this, new String[]{PERMISSON_READ_EXTERNAL_STORAGE}, PERMISSON_REQ_CODE);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == PERMISSON_REQ_CODE){
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                Toast.makeText(this, "Permission Granted kamu di izin kan menggunakan fitur ini", Toast.LENGTH_SHORT).show();
+
+            } else if(!ActivityCompat.shouldShowRequestPermissionRationale(this, PERMISSON_READ_EXTERNAL_STORAGE)){
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setMessage("fiture ini tidak tersedia")
+                        .setTitle("permisi dibutuhkan")
+                        .setCancelable(false)
+                        .setNegativeButton("batal", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .setPositiveButton("Oke", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                                Uri uri = Uri.fromParts("package", getPackageName(), null);
+                                intent.setData(uri);
+                                startActivity(intent);
+                                dialog.dismiss();
+                            }
+                        })
+                        .show();
+
+            } else {
+                requestRuntimePermission();
+            }
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == FilePickerManager.REQUEST_CODE){
+            if (resultCode == Activity.RESULT_OK) {
+                s_link_pdf = FilePickerManager.obtainData().get(0).toString();
+                nama_file.setText(s_link_pdf);
+
+            } else {
+                Toast.makeText(this, "You didn't choose anything~", Toast.LENGTH_SHORT).show();
+            }
+
+        }
+    }
+
 }
