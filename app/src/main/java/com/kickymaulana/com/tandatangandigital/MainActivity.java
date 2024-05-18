@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     MaterialButton logout;
     MaterialButton bangkitkan_kunci;
     SessionManager sessionManager;
+    MaterialButton tandatangani_dokumen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +53,15 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, Login.class);
                 startActivity(intent);
                 finish();
+            }
+        });
+
+        tandatangani_dokumen = (MaterialButton) findViewById(R.id.tandatangani_dokumen);
+        tandatangani_dokumen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, TandaTanganiDokumen.class);
+                startActivity(intent);
             }
         });
 
