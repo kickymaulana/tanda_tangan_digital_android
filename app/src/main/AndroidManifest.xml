@@ -16,6 +16,9 @@
         android:theme="@style/Theme.TandaTanganDigital"
         tools:targetApi="31">
         <activity
+            android:name=".TampilPdf"
+            android:exported="false" />
+        <activity
             android:name=".PeriksaKeaslianDokumen"
             android:exported="false" />
         <activity

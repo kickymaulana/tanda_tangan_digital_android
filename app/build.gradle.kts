@@ -38,6 +38,7 @@ dependencies {
     implementation(libs.android.spinkit)
     implementation(libs.circleimageview)
     implementation(libs.library)
+    implementation(libs.pdfviewpager.library)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

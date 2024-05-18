@@ -11,6 +11,8 @@ androidNetworking = "1.0.2"
 androidSpinkit = "1.4.0"
 circleimageview = "3.1.0"
 library = "1.3.0"
+pdfviewer = "1.1.0"
+libraryVersion = "1.1.2"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -24,6 +26,8 @@ android-networking = { group = "com.amitshekhar.android", name = "android-networ
 android-spinkit = { group = "com.github.ybq", name = "android-spinkit", version.ref = "androidSpinkit" }
 circleimageview = { group = "de.hdodenhof", name = "circleimageview", version.ref = "circleimageview" }
 library = { group = "com.cjj.materialrefeshlayout", name = "library", version.ref = "library" }
+pdfviewer = { group = "com.pnuema.android", name = "pdfviewer", version.ref = "pdfviewer" }
+pdfviewpager-library = { group = "es.voghdev.pdfviewpager", name = "library", version.ref = "libraryVersion" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

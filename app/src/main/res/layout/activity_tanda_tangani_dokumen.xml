@@ -43,6 +43,15 @@
                     android:textSize="18sp"
                     android:layout_marginTop="20dp"
                     android:textAllCaps="false"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/nama_file"
+                    android:text=""
+                    android:textSize="14sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:textStyle="italic"/>
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
