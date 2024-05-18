@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     MaterialButton bangkitkan_kunci;
     SessionManager sessionManager;
     MaterialButton tandatangani_dokumen;
+    MaterialButton periksa_keaslian_dokumen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +62,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, TandaTanganiDokumen.class);
+                startActivity(intent);
+            }
+        });
+
+        periksa_keaslian_dokumen = (MaterialButton) findViewById(R.id.periksa_keaslian_dokumen);
+        periksa_keaslian_dokumen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, PeriksaKeaslianDokumen.class);
                 startActivity(intent);
             }
         });

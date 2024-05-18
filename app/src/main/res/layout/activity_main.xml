@@ -197,6 +197,7 @@
                     android:textAllCaps="false"/>
 
                 <com.google.android.material.button.MaterialButton
+                    android:id="@+id/periksa_keaslian_dokumen"
                     android:text="Periksa Keaslian Dokumen"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
