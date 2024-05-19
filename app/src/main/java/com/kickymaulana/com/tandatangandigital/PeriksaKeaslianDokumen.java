@@ -1,5 +1,6 @@
 package com.kickymaulana.com.tandatangandigital;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -14,7 +15,9 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -27,6 +30,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.math.BigInteger;
+import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 import org.json.JSONException;
@@ -43,6 +48,18 @@ public class PeriksaKeaslianDokumen extends AppCompatActivity {
     Uri uri_hasil2;
     AppCompatTextView nama_dokumen;
     AppCompatTextView nama_signature;
+
+    String CHIPERTEXT;
+    String PLAINTEXT;
+    String SHA256 = "kosong";
+
+    MaterialButton periksa_keaslian_dokumen;
+
+    BigInteger e_big;
+    BigInteger n_big;
+
+    AppCompatEditText bilangan_e;
+    AppCompatEditText bilangan_n;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +93,14 @@ public class PeriksaKeaslianDokumen extends AppCompatActivity {
                     if (data != null) {
                         Uri uri = data.getData();
                         uri_hasil = uri;
+                        try {
+                            String hash = getSHA256FromUri(uri);
+                            Log.d("MainActivity", "Selected PDF URI: " + uri);
+                            Log.d("MainActivity", "SHA-256 Hash: " + hash);
+                            SHA256 = hash;
+                        } catch (IOException | NoSuchAlgorithmException e) {
+                            e.printStackTrace();
+                        }
                         nama_dokumen.setText(getFileNameFromUri(uri_hasil));
                     }
                 }
@@ -104,7 +129,9 @@ public class PeriksaKeaslianDokumen extends AppCompatActivity {
 
                         try {
                             JSONObject jsonObject = convertToJSON(content);
-                            Log.d("HASIL_JSON", jsonObject.toString());
+                            Log.d("HASIL_JSON", jsonObject.getJSONObject("signature").get("data").toString());
+                            CHIPERTEXT = jsonObject.getJSONObject("signature").get("data").toString();
+
                         } catch (JSONException e) {
                             throw new RuntimeException(e);
                         }
@@ -131,6 +158,55 @@ public class PeriksaKeaslianDokumen extends AppCompatActivity {
                 intent.addCategory(Intent.CATEGORY_OPENABLE);
                 intent.setType("text/plain");
                 openFileLauncher2.launch(intent);
+
+            }
+        });
+
+        bilangan_e = (AppCompatEditText) findViewById(R.id.bilangan_e);
+        bilangan_n = (AppCompatEditText) findViewById(R.id.bilangan_n);
+
+        periksa_keaslian_dokumen = (MaterialButton) findViewById(R.id.periksa_keaslian_dokumen);
+        periksa_keaslian_dokumen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String[] dataArray = CHIPERTEXT.split("\\.");
+
+                String hash_hasil_deskripsi = "";
+                for (String value : dataArray) {
+                    BigInteger c_big = new BigInteger(value);
+                    e_big = new BigInteger(bilangan_e.getText().toString());
+                    n_big = new BigInteger(bilangan_n.getText().toString());
+                    BigInteger m_big = c_big.modPow(e_big, n_big);
+                    System.out.println(value + " = " + m_big + " ascci : " + (char) m_big.intValue());
+                    hash_hasil_deskripsi = hash_hasil_deskripsi + (char) m_big.intValue();
+                }
+                PLAINTEXT = hash_hasil_deskripsi;
+                Log.d("PLAINTEXT", PLAINTEXT);
+                Log.d("PLAINTEXTSHA256", SHA256);
+
+                if (PLAINTEXT.equals(SHA256)){
+                    new AlertDialog.Builder(PeriksaKeaslianDokumen.this)
+                            .setMessage("File asli")
+                            .setPositiveButton("Oke", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            })
+                            .show();
+                } else {
+                    new AlertDialog.Builder(PeriksaKeaslianDokumen.this)
+                            .setMessage("File tidak asli")
+                            .setPositiveButton("Oke", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            })
+                            .show();
+
+                }
 
             }
         });
@@ -184,5 +260,31 @@ public class PeriksaKeaslianDokumen extends AppCompatActivity {
 
     private JSONObject convertToJSON(String content) throws JSONException {
         return new JSONObject(content);
+    }
+
+    //kode yang baru di tambahkan sampai kebawah
+    private String getSHA256FromUri(Uri uri) throws IOException, NoSuchAlgorithmException {
+        InputStream inputStream = getContentResolver().openInputStream(uri);
+        if (inputStream == null) {
+            throw new IOException("Unable to open input stream from URI");
+        }
+
+        MessageDigest digest = MessageDigest.getInstance("SHA-256");
+        byte[] buffer = new byte[8192];
+        int bytesRead;
+
+        while ((bytesRead = inputStream.read(buffer)) != -1) {
+            digest.update(buffer, 0, bytesRead);
+        }
+
+        inputStream.close();
+
+        byte[] hashBytes = digest.digest();
+        StringBuilder sb = new StringBuilder();
+        for (byte b : hashBytes) {
+            sb.append(String.format("%02x", b));
+        }
+
+        return sb.toString();
     }
 }
