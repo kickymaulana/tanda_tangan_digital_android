@@ -63,6 +63,8 @@ public class PeriksaKeaslianDokumen extends AppCompatActivity {
     private ActivityResultLauncher<Intent> daftar_kunci_publik_launcher;
     MaterialButton daftar_kunci_publik;
 
+    String nama_penanda_tangan;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -133,6 +135,7 @@ public class PeriksaKeaslianDokumen extends AppCompatActivity {
                             JSONObject jsonObject = convertToJSON(content);
                             Log.d("HASIL_JSON", jsonObject.getJSONObject("signature").get("data").toString());
                             CHIPERTEXT = jsonObject.getJSONObject("signature").get("data").toString();
+                            nama_penanda_tangan = jsonObject.getJSONObject("signature").get("nama").toString();
 
                         } catch (JSONException e) {
                             throw new RuntimeException(e);
@@ -189,7 +192,7 @@ public class PeriksaKeaslianDokumen extends AppCompatActivity {
 
                 if (PLAINTEXT.equals(SHA256)){
                     new AlertDialog.Builder(PeriksaKeaslianDokumen.this)
-                            .setMessage("File asli")
+                            .setMessage("File asli dan sudah ditandatangani oleh " + nama_penanda_tangan)
                             .setPositiveButton("Oke", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
