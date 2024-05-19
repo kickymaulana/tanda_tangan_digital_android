@@ -2,6 +2,7 @@ package com.kickymaulana.com.tandatangandigital;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -145,7 +146,7 @@ public class DaftarKunciPublik extends AppCompatActivity {
                             @Override
                             public void onResponse(JSONObject response) {
                                 try {
-                                    if (response.get("kode").equals("00")) {
+                                    if (response.get("kode").equals("200")) {
                                         for (int i = 0; i < response.getJSONArray("data").length(); i++) {
                                             String email = response.getJSONArray("data").getJSONObject(i).get("email").toString();
                                             String nama = response.getJSONArray("data").getJSONObject(i).get("nama").toString();
@@ -163,6 +164,7 @@ public class DaftarKunciPublik extends AppCompatActivity {
                                         startActivity(intent);
                                         finish();
                                     } else {
+                                        Log.d("RESEPONSEANEH", response.toString());
                                         Toast.makeText(DaftarKunciPublik.this, "ada kesalahan lain", Toast.LENGTH_SHORT).show();
                                         loading.setVisibility(View.GONE);
                                     }
@@ -194,7 +196,7 @@ public class DaftarKunciPublik extends AppCompatActivity {
                             @Override
                             public void onResponse(JSONObject response) {
                                 try {
-                                    if (response.get("kode").equals("00")) {
+                                    if (response.get("kode").equals("200")) {
 
                                         for (int i = 0; i < response.getJSONArray("data").length(); i++) {
                                             String email = response.getJSONArray("data").getJSONObject(i).get("email").toString();
@@ -277,7 +279,7 @@ public class DaftarKunciPublik extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            if (response.get("kode").equals("00")) {
+                            if (response.get("kode").equals("200")) {
                                 kunciPublikModelList.clear();
                                 for (int i = 0; i < response.getJSONArray("data").length(); i++) {
                                     String email = response.getJSONArray("data").getJSONObject(i).get("email").toString();

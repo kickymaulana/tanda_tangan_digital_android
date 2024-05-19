@@ -8,8 +8,9 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        app:navigationIconTint="@color/black"
-        app:titleTextColor="@color/white" />
+        app:navigationIconTint="@color/white"
+        app:titleTextColor="@color/white"
+        android:background="@color/black"/>
 
     <RelativeLayout
         android:layout_below="@+id/toolbar"
