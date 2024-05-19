@@ -2,27 +2,40 @@ package com.kickymaulana.com.tandatangandigital;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.BlockedNumberContract;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.button.MaterialButton;
 import com.kickymaulana.com.tandatangandigital.penolong.BilanganPrimaHelper;
 import com.kickymaulana.com.tandatangandigital.penolong.KunciDeskripsiHelper;
+import com.kickymaulana.com.tandatangandigital.sessionmanager.SessionManager;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.math.BigInteger;
+import java.util.Objects;
 
 public class BangkitkanKunci extends AppCompatActivity {
 
@@ -57,6 +70,10 @@ public class BangkitkanKunci extends AppCompatActivity {
 
     AppCompatTextView nilai_d;
     AppCompatTextView hasil_e, hasil_d, hasil_n1, hasil_n2;
+
+    MaterialButton simpan;
+    RelativeLayout loading;
+    SessionManager sessionManager;
 
 
     @Override
@@ -181,6 +198,59 @@ public class BangkitkanKunci extends AppCompatActivity {
                 hasil_d.setText(String.valueOf(d_big));
                 hasil_n1.setText(String.valueOf(n_big));
                 hasil_n2.setText(String.valueOf(n_big));
+
+            }
+        });
+
+        simpan = (MaterialButton) findViewById(R.id.simpan);
+        sessionManager = new SessionManager(BangkitkanKunci.this);
+        loading = (RelativeLayout) findViewById(R.id.loading);
+        simpan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loading.setVisibility(View.VISIBLE);
+                AndroidNetworking.post(sessionManager.getServer() + "api/update-public-and-private-key")
+                        .addBodyParameter("email", sessionManager.getUsername())
+                        .addBodyParameter("bilangan_e", hasil_e.getText().toString())
+                        .addBodyParameter("bilangan_d", hasil_d.getText().toString())
+                        .addBodyParameter("bilangan_n", hasil_n1.getText().toString())
+                        .addHeaders("Authorization", "Bearer " + sessionManager.getToken())
+                        .setPriority(Priority.MEDIUM)
+                        .build()
+                        .getAsJSONObject(new JSONObjectRequestListener() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                try {
+                                    Log.d("RESPONSE", response.toString());
+                                    if (response.get("kode").equals("401")) {
+                                        loading.setVisibility(View.GONE);
+                                        sessionManager.logout();
+                                        Intent intent = new Intent(BangkitkanKunci.this, Login.class);
+                                        startActivity(intent);
+                                        finish();
+                                    } else if (response.get("kode").equals("411")) {
+                                        String[] rule = {"email", "bilangan_e", "bilangan_d", "bilangan_n"};
+                                        String pesanvalidasi = new PesanValidasi(rule, response).getpesan();
+                                        loading.setVisibility(View.GONE);
+                                        new AlertDialog.Builder(BangkitkanKunci.this)
+                                                .setMessage(pesanvalidasi)
+                                                .show();
+                                    } else if (response.get("kode").equals("200")){
+                                        loading.setVisibility(View.GONE);
+                                        Toast.makeText(BangkitkanKunci.this, response.get("pesan").toString(), Toast.LENGTH_SHORT).show();
+
+                                    }
+                                } catch (JSONException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            }
+
+                            @Override
+                            public void onError(ANError anError) {
+                                loading.setVisibility(View.GONE);
+                            }
+
+                        });
 
             }
         });
