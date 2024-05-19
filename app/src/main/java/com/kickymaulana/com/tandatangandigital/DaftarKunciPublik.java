@@ -84,7 +84,6 @@ public class DaftarKunciPublik extends AppCompatActivity {
 
         loading.setVisibility(View.VISIBLE);
         AndroidNetworking.post(sessionManager.getServer() + "api/daftar-kunci-publik")
-                .addBodyParameter("email", sessionManager.getUsername())
                 .addBodyParameter("offset", String.valueOf(offset))
                 .addBodyParameter("limit", String.valueOf(limit))
                 .addHeaders("Authorization", "Bearer " + sessionManager.getToken())
@@ -94,6 +93,7 @@ public class DaftarKunciPublik extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
+                            Log.d("RESPONSEBARU", response.toString());
                             if (response.get("kode").equals("200")) {
                                 kunciPublikModelList.clear();
                                 for (int i = 0; i < response.getJSONArray("data").length(); i++) {
@@ -136,7 +136,6 @@ public class DaftarKunciPublik extends AppCompatActivity {
                 kunciPublikModelList.clear();
                 offset = 0;
                 AndroidNetworking.post(sessionManager.getServer() + "api/daftar-kunci-publik")
-                        .addBodyParameter("email", sessionManager.getUsername())
                         .addBodyParameter("offset", String.valueOf(offset))
                         .addBodyParameter("limit", String.valueOf(limit))
                         .addHeaders("Authorization", "Bearer " + sessionManager.getToken())
@@ -186,7 +185,6 @@ public class DaftarKunciPublik extends AppCompatActivity {
             public void onRefreshLoadMore(MaterialRefreshLayout materialRefreshLayout) {
                 super.onRefreshLoadMore(materialRefreshLayout);
                 AndroidNetworking.post(sessionManager.getServer() + "api/daftar-kunci-publik")
-                        .addBodyParameter("email", sessionManager.getUsername())
                         .addBodyParameter("offset", String.valueOf(offset))
                         .addBodyParameter("limit", String.valueOf(limit))
                         .addHeaders("Authorization", "Bearer " + sessionManager.getToken())
@@ -268,7 +266,6 @@ public class DaftarKunciPublik extends AppCompatActivity {
         loading.setVisibility(View.VISIBLE);
         offset = 0;
         AndroidNetworking.post(sessionManager.getServer() + "api/daftar-kunci-publik")
-                .addBodyParameter("email", sessionManager.getUsername())
                 .addBodyParameter("offset", String.valueOf(offset))
                 .addBodyParameter("limit", String.valueOf(limit))
                 .addBodyParameter("cari", cari)

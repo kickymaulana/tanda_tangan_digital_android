@@ -12,6 +12,7 @@ import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatEditText;
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -37,6 +38,7 @@ public class Login extends AppCompatActivity {
     MaterialButton login;
     RelativeLayout loading;
     SessionManager sessionManager;
+    AppCompatTextView periksa_keaslian_dokumen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,6 +111,14 @@ public class Login extends AppCompatActivity {
                             }
 
                         });
+            }
+        });
+        periksa_keaslian_dokumen = (AppCompatTextView) findViewById(R.id.periksa_keaslian_dokumen);
+        periksa_keaslian_dokumen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Login.this, PeriksaKeaslianDokumen.class);
+                startActivity(intent);
             }
         });
     }
