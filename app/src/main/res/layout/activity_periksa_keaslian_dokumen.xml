@@ -54,6 +54,34 @@
                     android:padding="10dp"
                     android:textSize="18sp"
                     android:textAllCaps="false"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:text="Dokumen"
+                    android:textSize="14sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:textStyle="italic"/>
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/nama_dokumen"
+                    android:textSize="14sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="italic"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:text="Signature"
+                    android:textSize="14sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:textStyle="italic"/>
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/nama_signature"
+                    android:textSize="14sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="italic"/>
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
