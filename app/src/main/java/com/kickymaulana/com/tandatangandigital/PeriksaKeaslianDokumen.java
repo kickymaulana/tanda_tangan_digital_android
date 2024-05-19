@@ -23,8 +23,14 @@ import androidx.core.view.WindowInsetsCompat;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.button.MaterialButton;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.security.NoSuchAlgorithmException;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class PeriksaKeaslianDokumen extends AppCompatActivity {
 
@@ -87,6 +93,21 @@ public class PeriksaKeaslianDokumen extends AppCompatActivity {
                         Uri uri = data.getData();
                         uri_hasil2 = uri;
                         nama_signature.setText(getFileNameFromUri(uri_hasil2));
+                        String content = null;
+                        try {
+                            content = readTextFromUri(uri_hasil2);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                        Log.d("MainActivity", "Selected TXT URI: " + uri);
+                        Log.d("MainActivity", "File Content: " + content);
+
+                        try {
+                            JSONObject jsonObject = convertToJSON(content);
+                            Log.d("HASIL_JSON", jsonObject.toString());
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
                     }
                 }
 
@@ -143,5 +164,25 @@ public class PeriksaKeaslianDokumen extends AppCompatActivity {
             }
         }
         return fileName;
+    }
+    private String readTextFromUri(Uri uri) throws IOException {
+        InputStream inputStream = getContentResolver().openInputStream(uri);
+        if (inputStream == null) {
+            throw new IOException("Unable to open input stream from URI");
+        }
+
+        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+        StringBuilder stringBuilder = new StringBuilder();
+        String line;
+        while ((line = reader.readLine()) != null) {
+            stringBuilder.append(line);
+        }
+
+        inputStream.close();
+        return stringBuilder.toString();
+    }
+
+    private JSONObject convertToJSON(String content) throws JSONException {
+        return new JSONObject(content);
     }
 }
