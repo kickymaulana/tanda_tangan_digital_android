@@ -307,6 +307,7 @@ public class TandaTanganiDokumen extends AppCompatActivity {
                         .setPositiveButton("Oke", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+                                ActivityCompat.requestPermissions(TandaTanganiDokumen.this, new String[]{PERMISSON_READ_EXTERNAL_STORAGE}, PERMISSON_REQ_CODE);
                                 Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
                                 Uri uri = Uri.fromParts("package", getPackageName(), null);
                                 intent.setData(uri);
