@@ -34,6 +34,7 @@
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/email"
+            android:inputType="textEmailAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
@@ -44,6 +45,7 @@
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/password"
+            android:inputType="textPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
@@ -68,16 +70,6 @@
             android:layout_marginTop="20dp"
             android:gravity="center"
             android:orientation="horizontal">
-            <androidx.appcompat.widget.AppCompatTextView
-                android:text="Tanda Tangani File"
-                android:textSize="12dp"
-                android:layout_width="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:layout_marginEnd="5dp"
-                android:textColor="#6750A3"
-                android:textStyle="bold"
-                android:layout_height="wrap_content"/>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/periksa_keaslian_dokumen"
