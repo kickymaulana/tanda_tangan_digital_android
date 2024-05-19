@@ -2,6 +2,8 @@ package com.kickymaulana.com.tandatangandigital.adapter;
 
 
 
+import static android.app.Activity.RESULT_OK;
+
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -41,14 +43,16 @@ public class KunciPublikAdapter extends RecyclerView.Adapter<KunciPublikAdapter.
 
         holder.nama.setText(kunciPublikModelList.get(position).getNama());
         holder.kunci_publik.setText("Kunci publik (e = " + kunciPublikModelList.get(position).getBilangan_e() + ", n = " + kunciPublikModelList.get(position).getBilangan_n() + ")");
-        /*holder.card_jadwal_hari_kerja.setOnClickListener(new View.OnClickListener() {
+        holder.card_kunci_publik.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, JadwalHariKerjaShow.class);
-                intent.putExtra("id", jadwalHariKerjaModelList.get(position).getId());
-                //((DaftarKunciPublik) context).tambah_launcher.launch(intent);
+                Intent intent = new Intent();
+                intent.putExtra("bilangan_e", kunciPublikModelList.get(position).getBilangan_e());
+                intent.putExtra("bilangan_n", kunciPublikModelList.get(position).getBilangan_n());
+                ((DaftarKunciPublik) context).setResult(RESULT_OK, intent);
+                ((DaftarKunciPublik) context).finish();
             }
-        });*/
+        });
     }
 
     @Override
