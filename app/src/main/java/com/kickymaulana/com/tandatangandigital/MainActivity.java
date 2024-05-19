@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     AppCompatTextView bilangan_n2;
 
     RelativeLayout loading;
+    MaterialButton daftar_kunci_publik;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -143,6 +144,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, PeriksaKeaslianDokumen.class);
+                startActivity(intent);
+            }
+        });
+
+        daftar_kunci_publik = (MaterialButton) findViewById(R.id.daftar_kunci_publik);
+        daftar_kunci_publik.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, DaftarKunciPublik.class);
                 startActivity(intent);
             }
         });

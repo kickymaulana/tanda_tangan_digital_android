@@ -207,6 +207,7 @@
                     android:textAllCaps="false"/>
 
                 <com.google.android.material.button.MaterialButton
+                    android:id="@+id/daftar_kunci_publik"
                     android:text="Daftar Penandatangan"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
