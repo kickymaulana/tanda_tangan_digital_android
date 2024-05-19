@@ -57,10 +57,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textStyle="italic" />
-                <androidx.appcompat.widget.AppCompatEditText
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/nama"
                     android:textSize="14sp"
-                    android:text="Jaringan tidak normal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/edit_text_bundar"
@@ -72,9 +71,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textStyle="italic" />
-                <androidx.appcompat.widget.AppCompatEditText
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/email"
                     android:textSize="14sp"
-                    android:text="kickymaulana@gmail.com"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/edit_text_bundar"
@@ -96,7 +95,7 @@
                             android:layout_height="wrap_content"
                             android:textStyle="italic"/>
                         <androidx.appcompat.widget.AppCompatTextView
-                            android:text="23434"
+                            android:id="@+id/bilangan_e"
                             android:textSize="14sp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -116,7 +115,7 @@
                             android:layout_height="wrap_content"
                             android:textStyle="italic"/>
                         <androidx.appcompat.widget.AppCompatTextView
-                            android:text="234234"
+                            android:id="@+id/bilangan_n1"
                             android:textSize="14sp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -143,7 +142,7 @@
                             android:layout_height="wrap_content"
                             android:textStyle="italic"/>
                         <androidx.appcompat.widget.AppCompatTextView
-                            android:text="55343"
+                            android:id="@+id/bilangan_d"
                             android:textSize="14sp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -163,7 +162,7 @@
                             android:layout_height="wrap_content"
                             android:textStyle="italic"/>
                         <androidx.appcompat.widget.AppCompatTextView
-                            android:text="234234"
+                            android:id="@+id/bilangan_n2"
                             android:textSize="14sp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
