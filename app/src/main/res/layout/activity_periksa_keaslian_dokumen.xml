@@ -133,6 +133,17 @@
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/daftar_kunci_publik"
+                    android:text="Pilih Kunci Publik Penandatangan"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cornerRadius="50dp"
+                    app:iconGravity="textStart"
+                    android:padding="10dp"
+                    android:textSize="18sp"
+                    android:textAllCaps="false"/>
+
 
 
 

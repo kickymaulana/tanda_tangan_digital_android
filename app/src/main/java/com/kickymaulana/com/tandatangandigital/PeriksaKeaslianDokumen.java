@@ -60,6 +60,8 @@ public class PeriksaKeaslianDokumen extends AppCompatActivity {
 
     AppCompatEditText bilangan_e;
     AppCompatEditText bilangan_n;
+    private ActivityResultLauncher<Intent> daftar_kunci_publik_launcher;
+    MaterialButton daftar_kunci_publik;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -207,6 +209,31 @@ public class PeriksaKeaslianDokumen extends AppCompatActivity {
                             .show();
 
                 }
+
+            }
+        });
+
+        daftar_kunci_publik_launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+            @Override
+            public void onActivityResult(ActivityResult result) {
+
+                if (result.getResultCode() == RESULT_OK) {
+                    Intent data = result.getData();
+                    if (data != null) {
+                        bilangan_e.setText(data.getStringExtra("bilangan_e"));
+                        bilangan_n.setText(data.getStringExtra("bilangan_n"));
+                    }
+                }
+
+            }
+        });
+
+        daftar_kunci_publik = (MaterialButton) findViewById(R.id.daftar_kunci_publik);
+        daftar_kunci_publik.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PeriksaKeaslianDokumen.this, DaftarKunciPublik.class);
+                daftar_kunci_publik_launcher.launch(intent);
 
             }
         });
