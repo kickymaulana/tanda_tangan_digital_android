@@ -68,7 +68,9 @@ import java.io.OutputStream;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.BitSet;
+import java.util.List;
 import java.util.Objects;
 
 import es.voghdev.pdfviewpager.library.RemotePDFViewPager;
@@ -95,6 +97,8 @@ public class TandaTanganiDokumen extends AppCompatActivity {
 
     private ActivityResultLauncher<Intent> openFileLauncher;
     private ActivityResultLauncher<Intent> createFileLauncher;
+    private static final int REQUEST_PERMISSIONS_CODE = 1;
+
 
 
     @Override
@@ -107,6 +111,13 @@ public class TandaTanganiDokumen extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        // Meminta izin jika belum diberikan
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            requestMediaPermissions();
+        }
+
+
         openFileLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
             public void onActivityResult(ActivityResult result) {
@@ -121,6 +132,7 @@ public class TandaTanganiDokumen extends AppCompatActivity {
                             Log.d("MainActivity", "Selected PDF URI: " + uri);
                             Log.d("MainActivity", "SHA-256 Hash: " + hash);
                             SHA256 = hash;
+                            nama_file.setText(getFileNameFromUri(uri_hasil));
                         } catch (IOException | NoSuchAlgorithmException e) {
                             e.printStackTrace();
                         }
@@ -236,7 +248,6 @@ public class TandaTanganiDokumen extends AppCompatActivity {
         });
 
 
-
     }
 
 
@@ -246,21 +257,6 @@ public class TandaTanganiDokumen extends AppCompatActivity {
             finish();
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == FilePickerManager.REQUEST_CODE) {
-            if (resultCode == Activity.RESULT_OK) {
-                s_link_pdf = FilePickerManager.obtainData().get(0).toString();
-                nama_file.setText(s_link_pdf);
-
-            } else {
-                Toast.makeText(this, "You didn't choose anything~", Toast.LENGTH_SHORT).show();
-            }
-
-        }
     }
 
     //kode yang baru di tambahkan sampai kebawah
@@ -330,5 +326,38 @@ public class TandaTanganiDokumen extends AppCompatActivity {
         }
     }
 
+    private void requestMediaPermissions() {
+        String[] permissions = {
+                Manifest.permission.READ_MEDIA_IMAGES,
+                Manifest.permission.READ_MEDIA_VIDEO,
+                Manifest.permission.READ_MEDIA_AUDIO
+        };
 
-}
+        boolean permissionsGranted = true;
+        for (String permission : permissions) {
+            if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
+                permissionsGranted = false;
+                break;
+            }
+        }
+
+        if (!permissionsGranted) {
+            ActivityCompat.requestPermissions(this, permissions, REQUEST_PERMISSIONS_CODE);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == REQUEST_PERMISSIONS_CODE) {
+            for (int result : grantResults) {
+                if (result != PackageManager.PERMISSION_GRANTED) {
+                    // Jika ada izin yang tidak diberikan
+                    // Tangani kasus ini sesuai kebutuhan aplikasi Anda
+                    return;
+                }
+            }
+            // Semua izin diberikan
+        }
+    }}
