@@ -92,11 +92,6 @@ public class TandaTanganiDokumen extends AppCompatActivity {
     Uri uri_hasil;
     private String stringToSave;
 
-    private static final String PERMISSON_READ_EXTERNAL_STORAGE = Manifest.permission.READ_EXTERNAL_STORAGE;
-
-    private static final int PERMISSON_REQ_CODE = 100;
-
-
 
     private ActivityResultLauncher<Intent> openFileLauncher;
     private ActivityResultLauncher<Intent> createFileLauncher;
@@ -153,11 +148,6 @@ public class TandaTanganiDokumen extends AppCompatActivity {
 
             }
         });
-
-        // Initialize result launcher
-
-        requestRuntimePermission();
-
 
         MaterialToolbar toolbar = (MaterialToolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -256,71 +246,6 @@ public class TandaTanganiDokumen extends AppCompatActivity {
             finish();
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    private void requestRuntimePermission() {
-        if (ActivityCompat.checkSelfPermission(this, PERMISSON_READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-            Toast.makeText(this, "Permission Granted kamu di izin kan menggunakan fitur ini", Toast.LENGTH_SHORT).show();
-        } else if (ActivityCompat.shouldShowRequestPermissionRationale(this, PERMISSON_READ_EXTERNAL_STORAGE)) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage("fitur ini membutuhkan izin read external storage")
-                    .setTitle("permission dibutuhkan")
-                    .setCancelable(false)
-                    .setPositiveButton("Oke", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            ActivityCompat.requestPermissions(TandaTanganiDokumen.this, new String[]{PERMISSON_READ_EXTERNAL_STORAGE}, PERMISSON_REQ_CODE);
-                            dialog.dismiss();
-
-                        }
-                    })
-                    .setNegativeButton("batal", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    })
-                    .show();
-        } else {
-            ActivityCompat.requestPermissions(this, new String[]{PERMISSON_READ_EXTERNAL_STORAGE}, PERMISSON_REQ_CODE);
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == PERMISSON_REQ_CODE) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(this, "Permission Granted kamu di izin kan menggunakan fitur ini", Toast.LENGTH_SHORT).show();
-
-            } else if (!ActivityCompat.shouldShowRequestPermissionRationale(this, PERMISSON_READ_EXTERNAL_STORAGE)) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setMessage("fiture ini tidak tersedia")
-                        .setTitle("permisi dibutuhkan")
-                        .setCancelable(false)
-                        .setNegativeButton("batal", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        })
-                        .setPositiveButton("Oke", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                ActivityCompat.requestPermissions(TandaTanganiDokumen.this, new String[]{PERMISSON_READ_EXTERNAL_STORAGE}, PERMISSON_REQ_CODE);
-                                Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                                Uri uri = Uri.fromParts("package", getPackageName(), null);
-                                intent.setData(uri);
-                                startActivity(intent);
-                                dialog.dismiss();
-                            }
-                        })
-                        .show();
-
-            } else {
-                requestRuntimePermission();
-            }
-        }
     }
 
     @Override

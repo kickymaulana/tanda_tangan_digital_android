@@ -16,7 +16,7 @@ public class SessionManager {
     }
 
     public String getServer(){
-        return sharedPreferences.getString("server", "https://914d-103-138-218-82.ngrok-free.app/tanda_tangan_digital_laravel/public/");
+        return sharedPreferences.getString("server", "https://ada4-2405-8180-c01-f36a-6ca6-24e6-a69f-519d.ngrok-free.app/tanda_tangan_digital_laravel/public/");
     }
 
     public void setServer(String server){
