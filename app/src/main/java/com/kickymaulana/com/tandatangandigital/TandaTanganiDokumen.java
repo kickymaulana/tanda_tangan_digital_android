@@ -112,10 +112,7 @@ public class TandaTanganiDokumen extends AppCompatActivity {
             return insets;
         });
 
-        // Meminta izin jika belum diberikan
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            requestMediaPermissions();
-        }
+        requestPermissions();
 
 
         openFileLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
@@ -326,13 +323,28 @@ public class TandaTanganiDokumen extends AppCompatActivity {
         }
     }
 
-    private void requestMediaPermissions() {
-        String[] permissions = {
-                Manifest.permission.READ_MEDIA_IMAGES,
-                Manifest.permission.READ_MEDIA_VIDEO,
-                Manifest.permission.READ_MEDIA_AUDIO
-        };
+    private void requestPermissions() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            // Android 13 dan yang lebih baru
+            String[] permissions = {
+                    Manifest.permission.READ_MEDIA_IMAGES,
+                    Manifest.permission.READ_MEDIA_VIDEO,
+                    Manifest.permission.READ_MEDIA_AUDIO
+            };
 
+            requestPermissionsIfNeeded(permissions);
+        } else {
+            // Android 10 dan yang lebih lama
+            String[] permissions = {
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+            };
+
+            requestPermissionsIfNeeded(permissions);
+        }
+    }
+
+    private void requestPermissionsIfNeeded(String[] permissions) {
         boolean permissionsGranted = true;
         for (String permission : permissions) {
             if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
@@ -360,4 +372,5 @@ public class TandaTanganiDokumen extends AppCompatActivity {
             }
             // Semua izin diberikan
         }
-    }}
+    }
+}
