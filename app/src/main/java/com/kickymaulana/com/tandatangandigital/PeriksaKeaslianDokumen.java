@@ -1,9 +1,12 @@
 package com.kickymaulana.com.tandatangandigital;
 
+import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.OpenableColumns;
 import android.util.Log;
@@ -15,10 +18,14 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatTextView;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -64,6 +71,7 @@ public class PeriksaKeaslianDokumen extends AppCompatActivity {
     MaterialButton daftar_kunci_publik;
 
     String nama_penanda_tangan;
+    private static final int REQUEST_PERMISSIONS_CODE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +83,9 @@ public class PeriksaKeaslianDokumen extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        requestPermissions();
 
         MaterialToolbar toolbar = (MaterialToolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -316,5 +327,55 @@ public class PeriksaKeaslianDokumen extends AppCompatActivity {
         }
 
         return sb.toString();
+    }
+    private void requestPermissions() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            // Android 13 dan yang lebih baru
+            String[] permissions = {
+                    android.Manifest.permission.READ_MEDIA_IMAGES,
+                    android.Manifest.permission.READ_MEDIA_VIDEO,
+                    android.Manifest.permission.READ_MEDIA_AUDIO
+            };
+
+            requestPermissionsIfNeeded(permissions);
+        } else {
+            // Android 10 dan yang lebih lama
+            String[] permissions = {
+                    android.Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+            };
+
+            requestPermissionsIfNeeded(permissions);
+        }
+    }
+
+    private void requestPermissionsIfNeeded(String[] permissions) {
+        boolean permissionsGranted = true;
+        for (String permission : permissions) {
+            if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
+                permissionsGranted = false;
+                break;
+            }
+        }
+
+        if (!permissionsGranted) {
+            ActivityCompat.requestPermissions(this, permissions, REQUEST_PERMISSIONS_CODE);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == REQUEST_PERMISSIONS_CODE) {
+            for (int result : grantResults) {
+                if (result != PackageManager.PERMISSION_GRANTED) {
+                    // Jika ada izin yang tidak diberikan
+                    // Tangani kasus ini sesuai kebutuhan aplikasi Anda
+                    return;
+                }
+            }
+            // Semua izin diberikan
+        }
     }
 }
