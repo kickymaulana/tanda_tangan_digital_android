@@ -72,6 +72,7 @@
                             android:textStyle="italic"/>
                         <androidx.appcompat.widget.AppCompatEditText
                             android:id="@+id/bilangan_d"
+                            android:inputType="number"
                             android:textSize="14sp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -94,6 +95,7 @@
                         <androidx.appcompat.widget.AppCompatEditText
                             android:id="@+id/bilangan_n"
                             android:textSize="14sp"
+                            android:inputType="number"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/edit_text_bundar"
