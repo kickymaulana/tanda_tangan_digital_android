@@ -1,12 +1,11 @@
 package com.kickymaulana.com.tandatangandigital;
 
-import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AlertDialog;
@@ -21,60 +20,56 @@ import androidx.core.view.WindowInsetsCompat;
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
-import com.androidnetworking.interfaces.JSONArrayRequestListener;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.google.android.material.button.MaterialButton;
 import com.kickymaulana.com.tandatangandigital.sessionmanager.SessionManager;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Objects;
 
-public class Login extends AppCompatActivity {
+public class Register extends AppCompatActivity {
 
     AppCompatEditText email;
+    AppCompatEditText nama;
     AppCompatEditText password;
-    MaterialButton login;
+    AppCompatEditText password_confirm;
+    MaterialButton register;
     RelativeLayout loading;
     SessionManager sessionManager;
-    AppCompatTextView periksa_keaslian_dokumen;
-    AppCompatTextView register;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_register);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         email = (AppCompatEditText) findViewById(R.id.email);
+        nama = (AppCompatEditText) findViewById(R.id.nama);
         password = (AppCompatEditText) findViewById(R.id.password);
-        login = (MaterialButton) findViewById(R.id.login);
+        password_confirm = (AppCompatEditText) findViewById(R.id.password_confirm);
+        register = (MaterialButton) findViewById(R.id.register);
         loading = (RelativeLayout) findViewById(R.id.loading);
-        sessionManager = new SessionManager(Login.this);
+        sessionManager = new SessionManager(Register.this);
 
-        if (!sessionManager.getUsername().equals("kosong")){
-            Intent intent = new Intent(Login.this, MainActivity.class);
-            startActivity(intent);
-            finish();
-        }
-
-
-        login.setOnClickListener(new View.OnClickListener() {
+        register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 loading.setVisibility(View.VISIBLE);
-                AndroidNetworking.post(sessionManager.getServer() + "api/login")
+                AndroidNetworking.post(sessionManager.getServer() + "api/register")
                         .addBodyParameter("email", Objects.requireNonNull(email.getText()).toString())
+                        .addBodyParameter("nama", Objects.requireNonNull(nama.getText()).toString())
                         .addBodyParameter("password", Objects.requireNonNull(password.getText()).toString())
+                        .addBodyParameter("password_confirmation", Objects.requireNonNull(password_confirm.getText()).toString())
                         .setPriority(Priority.MEDIUM)
                         .build()
                         .getAsJSONObject(new JSONObjectRequestListener() {
@@ -84,21 +79,27 @@ public class Login extends AppCompatActivity {
                                 try {
                                     if (response.get("kode").equals("200")) {
                                         loading.setVisibility(View.GONE);
-                                        sessionManager.setUsername(response.getJSONObject("data").getJSONObject("user").get("email").toString());
-                                        sessionManager.setToken(response.getJSONObject("data").get("token").toString());
-                                        Intent intent = new Intent(Login.this, MainActivity.class);
-                                        startActivity(intent);
-                                        finish();
+                                        new AlertDialog.Builder(Register.this)
+                                                .setMessage(response.get("pesan").toString())
+                                                .setPositiveButton("Login", new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialog, int which) {
+                                                        Intent intent = new Intent(Register.this, Login.class);
+                                                        startActivity(intent);
+                                                        finish();
+                                                    }
+                                                })
+                                                .show();
                                     } else if (response.get("kode").equals("411")) {
-                                        String[] rule = {"email", "password"};
+                                        String[] rule = {"email", "nama", "password"};
                                         String pesanvalidasi = new PesanValidasi(rule, response).getpesan();
                                         loading.setVisibility(View.GONE);
-                                        new AlertDialog.Builder(Login.this)
+                                        new AlertDialog.Builder(Register.this)
                                                 .setMessage(pesanvalidasi)
                                                 .show();
                                     } else if (response.get("kode").equals("406")){
                                         loading.setVisibility(View.GONE);
-                                        new AlertDialog.Builder(Login.this)
+                                        new AlertDialog.Builder(Register.this)
                                                 .setMessage(response.get("pesan").toString())
                                                 .show();
 
@@ -114,23 +115,6 @@ public class Login extends AppCompatActivity {
                             }
 
                         });
-            }
-        });
-        periksa_keaslian_dokumen = (AppCompatTextView) findViewById(R.id.periksa_keaslian_dokumen);
-        periksa_keaslian_dokumen.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Login.this, PeriksaKeaslianDokumen.class);
-                startActivity(intent);
-            }
-        });
-        register = (AppCompatTextView) findViewById(R.id.register);
-        register.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Login.this, Register.class);
-                startActivity(intent);
-
             }
         });
     }

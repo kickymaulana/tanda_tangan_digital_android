@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Tanda Tangan Digital</string>
+    <string name="teks_kebijakan">Dengan mengklik tombol Login, anda telah menyetujui <a href="#">Syarat Penggunaan</a> dan <a href="#">Kebijakan Privasi</a></string>
 </resources>
