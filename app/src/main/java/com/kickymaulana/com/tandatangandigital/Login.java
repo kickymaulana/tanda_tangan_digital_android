@@ -3,6 +3,7 @@ package com.kickymaulana.com.tandatangandigital;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -41,6 +42,8 @@ public class Login extends AppCompatActivity {
     SessionManager sessionManager;
     AppCompatTextView periksa_keaslian_dokumen;
     AppCompatTextView register;
+
+    AppCompatTextView teks_kebijakan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -133,5 +136,8 @@ public class Login extends AppCompatActivity {
 
             }
         });
+
+        teks_kebijakan = (AppCompatTextView) findViewById(R.id.teks_kebijakan);
+        teks_kebijakan.setMovementMethod(LinkMovementMethod.getInstance());
     }
 }
