@@ -142,14 +142,20 @@ public class BangkitkanKunci extends AppCompatActivity {
         lengkapi_rumus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                p = Integer.valueOf(bilangan_prima_p_s);
-                q = Integer.valueOf(bilangan_prima_q_s);
-                rumus_p.setText("p = " + p + ", q = " + q);
-                n = p * q;
-                rumus_n.setText("n = p x q = " + p + " x " + q + " = " + n);
-                fn = (p-1) * (q-1);
-                rumus_fn.setText("f(n) = (" + p + " - 1) x (" + q + " - 1) = " + fn);
-                pilih_bilangan_e.setText("Pilih satu bilangan(e) yang relatif prima terhadap nilai f(n) = " + fn);
+                if (pilih_bilangan_prima_p.getText().equals("pilih bilangan") || pilih_bilangan_prima_q.getText().equals("pilih bilangan")){
+                    Toast.makeText(BangkitkanKunci.this, "Silahkan pilh terlebih dahulu bilangan", Toast.LENGTH_SHORT).show();
+                } else {
+                    p = Integer.valueOf(bilangan_prima_p_s);
+                    q = Integer.valueOf(bilangan_prima_q_s);
+                    rumus_p.setText("p = " + p + ", q = " + q);
+                    n = p * q;
+                    rumus_n.setText("n = p x q = " + p + " x " + q + " = " + n);
+                    fn = (p-1) * (q-1);
+                    rumus_fn.setText("f(n) = (" + p + " - 1) x (" + q + " - 1) = " + fn);
+                    pilih_bilangan_e.setText("Pilih satu bilangan(e) yang relatif prima terhadap nilai f(n) = " + fn);
+
+                }
+
 
             }
         });
@@ -185,19 +191,24 @@ public class BangkitkanKunci extends AppCompatActivity {
         hitung_nilai_d.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                e_big = new BigInteger(bilangan_relatif_prima_e_s);
-                p_big = new BigInteger(String.valueOf(p));
-                q_big = new BigInteger(String.valueOf(q));
-                n_big = p_big.multiply(q_big);
-                f_n_big = p_big.subtract(new BigInteger("1")).multiply(q_big.subtract(new BigInteger("1")));
-                KunciDeskripsiHelper kunciDeskripsi = new KunciDeskripsiHelper();
-                d_big = kunciDeskripsi.jalankan(f_n_big, e_big);
-                nilai_d.setText(String.valueOf(d_big));
+                if (pilih_bilangan_relatif_prima_e.getText().equals("pilih bilangan")){
+                    Toast.makeText(BangkitkanKunci.this, "pilih terlebih dahulu bilangan yang relatif prima", Toast.LENGTH_SHORT).show();
+                } else {
+                    e_big = new BigInteger(bilangan_relatif_prima_e_s);
+                    p_big = new BigInteger(String.valueOf(p));
+                    q_big = new BigInteger(String.valueOf(q));
+                    n_big = p_big.multiply(q_big);
+                    f_n_big = p_big.subtract(new BigInteger("1")).multiply(q_big.subtract(new BigInteger("1")));
+                    KunciDeskripsiHelper kunciDeskripsi = new KunciDeskripsiHelper();
+                    d_big = kunciDeskripsi.jalankan(f_n_big, e_big);
+                    nilai_d.setText(String.valueOf(d_big));
 
-                hasil_e.setText(String.valueOf(e_big));
-                hasil_d.setText(String.valueOf(d_big));
-                hasil_n1.setText(String.valueOf(n_big));
-                hasil_n2.setText(String.valueOf(n_big));
+                    hasil_e.setText(String.valueOf(e_big));
+                    hasil_d.setText(String.valueOf(d_big));
+                    hasil_n1.setText(String.valueOf(n_big));
+                    hasil_n2.setText(String.valueOf(n_big));
+
+                }
 
             }
         });
