@@ -3,7 +3,9 @@ package com.kickymaulana.tandatangandigital;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
 
@@ -12,6 +14,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.AppCompatEditText;
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -20,6 +23,7 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.button.MaterialButton;
 import com.kickymaulana.tandatangandigital.sessionmanager.SessionManager;
 
@@ -37,6 +41,7 @@ public class Register extends AppCompatActivity {
     MaterialButton register;
     RelativeLayout loading;
     SessionManager sessionManager;
+    AppCompatTextView teks_kebijakan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +53,12 @@ public class Register extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        MaterialToolbar toolbar = (MaterialToolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setTitle("Register");
 
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
@@ -116,5 +127,14 @@ public class Register extends AppCompatActivity {
                         });
             }
         });
+        teks_kebijakan = (AppCompatTextView) findViewById(R.id.teks_kebijakan);
+        teks_kebijakan.setMovementMethod(LinkMovementMethod.getInstance());
+    }
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemid = item.getItemId();
+        if (itemid == android.R.id.home) {
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
