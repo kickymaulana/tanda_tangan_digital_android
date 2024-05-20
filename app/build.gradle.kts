@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace = "com.kickymaulana.com.tandatangandigital"
+    namespace = "com.kickymaulana.tandatangandigital"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.kickymaulana.com.tandatangandigital"
+        applicationId = "com.kickymaulana.tandatangandigital"
         minSdk = 24
         targetSdk = 34
         versionCode = 1

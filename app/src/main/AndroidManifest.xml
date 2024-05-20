@@ -23,34 +23,34 @@
         android:theme="@style/Theme.TandaTanganDigital"
         tools:targetApi="31">
         <activity
-            android:name=".Register"
+            android:name="com.kickymaulana.tandatangandigital.Register"
             android:exported="false" />
         <activity
-            android:name=".DaftarKunciPublik"
+            android:name="com.kickymaulana.tandatangandigital.DaftarKunciPublik"
             android:exported="false" />
         <activity
-            android:name=".TampilPdf"
+            android:name="com.kickymaulana.tandatangandigital.TampilPdf"
             android:exported="false" />
         <activity
-            android:name=".PeriksaKeaslianDokumen"
+            android:name="com.kickymaulana.tandatangandigital.PeriksaKeaslianDokumen"
             android:exported="false" />
         <activity
-            android:name=".TandaTanganiDokumen"
+            android:name="com.kickymaulana.tandatangandigital.TandaTanganiDokumen"
             android:exported="false" />
         <activity
-            android:name=".BilanganRelatifPrima"
+            android:name="com.kickymaulana.tandatangandigital.BilanganRelatifPrima"
             android:exported="false" />
         <activity
-            android:name=".BilanganPrima"
+            android:name="com.kickymaulana.tandatangandigital.BilanganPrima"
             android:exported="false" />
         <activity
-            android:name=".BangkitkanKunci"
+            android:name="com.kickymaulana.tandatangandigital.BangkitkanKunci"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name="com.kickymaulana.tandatangandigital.MainActivity"
             android:exported="false" />
         <activity
-            android:name=".Login"
+            android:name="com.kickymaulana.tandatangandigital.Login"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
