@@ -94,8 +94,6 @@ public class Register extends AppCompatActivity {
                                                 .setPositiveButton("Login", new DialogInterface.OnClickListener() {
                                                     @Override
                                                     public void onClick(DialogInterface dialog, int which) {
-                                                        Intent intent = new Intent(Register.this, Login.class);
-                                                        startActivity(intent);
                                                         finish();
                                                     }
                                                 })

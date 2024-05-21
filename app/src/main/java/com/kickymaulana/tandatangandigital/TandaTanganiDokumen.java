@@ -65,6 +65,9 @@ public class TandaTanganiDokumen extends AppCompatActivity {
     private ActivityResultLauncher<Intent> createFileLauncher;
     private static final int REQUEST_PERMISSIONS_CODE = 1;
 
+    private ActivityResultLauncher<Intent> lengkapi_kunci_privat_launcher;
+    MaterialButton lengkapi_kunci_privat;
+
 
 
     @Override
@@ -208,6 +211,31 @@ public class TandaTanganiDokumen extends AppCompatActivity {
                 Intent intent = new Intent(TandaTanganiDokumen.this, TampilPdf.class);
                 intent.putExtra("s_link_pdf", s_link_pdf);
                 startActivity(intent);
+            }
+        });
+
+        lengkapi_kunci_privat_launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+            @Override
+            public void onActivityResult(ActivityResult result) {
+
+                if (result.getResultCode() == RESULT_OK) {
+                    Intent data = result.getData();
+                    if (data != null) {
+                        bilangan_d.setText(data.getStringExtra("bilangan_d"));
+                        bilangan_n.setText(data.getStringExtra("bilangan_n"));
+                    }
+                }
+
+            }
+        });
+
+        lengkapi_kunci_privat = (MaterialButton) findViewById(R.id.lengkapi_kunci_privat);
+        lengkapi_kunci_privat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(TandaTanganiDokumen.this, AmbilKunciPrivat.class);
+                lengkapi_kunci_privat_launcher.launch(intent);
+
             }
         });
 

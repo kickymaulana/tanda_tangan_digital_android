@@ -23,34 +23,37 @@
         android:theme="@style/Theme.TandaTanganDigital"
         tools:targetApi="31">
         <activity
-            android:name="com.kickymaulana.tandatangandigital.Register"
+            android:name=".AmbilKunciPrivat"
             android:exported="false" />
         <activity
-            android:name="com.kickymaulana.tandatangandigital.DaftarKunciPublik"
+            android:name=".Register"
             android:exported="false" />
         <activity
-            android:name="com.kickymaulana.tandatangandigital.TampilPdf"
+            android:name=".DaftarKunciPublik"
             android:exported="false" />
         <activity
-            android:name="com.kickymaulana.tandatangandigital.PeriksaKeaslianDokumen"
+            android:name=".TampilPdf"
             android:exported="false" />
         <activity
-            android:name="com.kickymaulana.tandatangandigital.TandaTanganiDokumen"
+            android:name=".PeriksaKeaslianDokumen"
             android:exported="false" />
         <activity
-            android:name="com.kickymaulana.tandatangandigital.BilanganRelatifPrima"
+            android:name=".TandaTanganiDokumen"
             android:exported="false" />
         <activity
-            android:name="com.kickymaulana.tandatangandigital.BilanganPrima"
+            android:name=".BilanganRelatifPrima"
             android:exported="false" />
         <activity
-            android:name="com.kickymaulana.tandatangandigital.BangkitkanKunci"
+            android:name=".BilanganPrima"
             android:exported="false" />
         <activity
-            android:name="com.kickymaulana.tandatangandigital.MainActivity"
+            android:name=".BangkitkanKunci"
             android:exported="false" />
         <activity
-            android:name="com.kickymaulana.tandatangandigital.Login"
+            android:name=".MainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Login"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
