@@ -49,6 +49,7 @@ public class SessionManager {
     public void logout(){
         editor.putString("username", "kosong");
         editor.putString("token", "kosong");
+        editor.putString("nama", "kosong");
         editor.commit();
     }
 

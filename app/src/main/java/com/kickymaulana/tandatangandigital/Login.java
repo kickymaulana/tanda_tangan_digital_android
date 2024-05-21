@@ -84,6 +84,7 @@ public class Login extends AppCompatActivity {
                                     if (response.get("kode").equals("200")) {
                                         loading.setVisibility(View.GONE);
                                         sessionManager.setUsername(response.getJSONObject("data").getJSONObject("user").get("email").toString());
+                                        sessionManager.setNama(response.getJSONObject("data").getJSONObject("user").get("nama").toString());
                                         sessionManager.setToken(response.getJSONObject("data").get("token").toString());
                                         Intent intent = new Intent(Login.this, MainActivity.class);
                                         startActivity(intent);

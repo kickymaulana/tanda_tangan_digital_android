@@ -30,6 +30,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.button.MaterialButton;
+import com.kickymaulana.tandatangandigital.sessionmanager.SessionManager;
 
 import android.net.Uri;
 
@@ -60,6 +61,8 @@ public class TandaTanganiDokumen extends AppCompatActivity {
     Uri uri_hasil;
     private String stringToSave;
 
+    SessionManager sessionManager;
+
 
     private ActivityResultLauncher<Intent> openFileLauncher;
     private ActivityResultLauncher<Intent> createFileLauncher;
@@ -80,6 +83,7 @@ public class TandaTanganiDokumen extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        sessionManager = new SessionManager(TandaTanganiDokumen.this);
 
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         requestPermissions();
@@ -100,6 +104,7 @@ public class TandaTanganiDokumen extends AppCompatActivity {
                             Log.d("MainActivity", "SHA-256 Hash: " + hash);
                             SHA256 = hash;
                             nama_file.setText(getFileNameFromUri(uri_hasil));
+                            s_link_pdf = uri_hasil.getPath();
                         } catch (IOException | NoSuchAlgorithmException e) {
                             e.printStackTrace();
                         }
@@ -150,6 +155,7 @@ public class TandaTanganiDokumen extends AppCompatActivity {
         });
 
 
+
         tandatangani_dokumen = (MaterialButton) findViewById(R.id.tandatangani_dokumen);
         tandatangani_dokumen.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -174,7 +180,7 @@ public class TandaTanganiDokumen extends AppCompatActivity {
                 CHIPERTEXT = chipertext;
                 JSONObject signatureObject = new JSONObject();
                 try {
-                    signatureObject.put("nama", "Kicky Maulana");
+                    signatureObject.put("nama", sessionManager.getNama());
                     signatureObject.put("data", CHIPERTEXT);
                     JSONObject finalObject = new JSONObject();
                     finalObject.put("signature", signatureObject);
