@@ -211,14 +211,14 @@ public class TandaTanganiDokumen extends AppCompatActivity {
         });
 
         nama_file = (AppCompatTextView) findViewById(R.id.nama_file);
-        nama_file.setOnClickListener(new View.OnClickListener() {
+        /*nama_file.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(TandaTanganiDokumen.this, TampilPdf.class);
                 intent.putExtra("s_link_pdf", s_link_pdf);
                 startActivity(intent);
             }
-        });
+        });*/
 
         lengkapi_kunci_privat_launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
