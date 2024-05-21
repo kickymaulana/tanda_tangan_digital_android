@@ -23,8 +23,10 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:text="Tanda Tangan Digital"
             android:textSize="20dp"
+            android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_gravity="center"
+            android:textColor="@color/warna_aku"
             android:layout_height="wrap_content"/>
 
         <androidx.appcompat.widget.AppCompatTextView
