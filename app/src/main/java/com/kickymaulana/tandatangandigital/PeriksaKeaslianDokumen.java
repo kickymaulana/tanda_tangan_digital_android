@@ -203,7 +203,7 @@ public class PeriksaKeaslianDokumen extends AppCompatActivity {
 
                 if (PLAINTEXT.equals(SHA256)){
                     new AlertDialog.Builder(PeriksaKeaslianDokumen.this)
-                            .setMessage("File asli dan sudah ditandatangani oleh " + nama_penanda_tangan)
+                            .setMessage("File asli dan sudah ditandatangani oleh \n\n" + nama_penanda_tangan)
                             .setPositiveButton("Oke", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {

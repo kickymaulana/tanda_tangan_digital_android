@@ -26,12 +26,22 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:padding="20dp">
+
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:text="Gunakan pasangan kunci public seseorang yaitu pasangan nilai e dan n dan file signaturenya untuk memeriksa keaslian apakah dokumen tersebut benar-benar sudah ditandatangani oleh orang tersebut dan belum pernah dimodifikasi oleh orang lain"
+                    android:text="Untuk memeriksa keaslian pdf, membutuhkan file pdf yang sudah ditandatangani dan pasangan kunci publik milik penandatangan"
                     android:textSize="14sp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
                     android:layout_marginBottom="10dp"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:text="Pilih file pdf yang sudah ditandatangani"
+                    android:textSize="14sp"
+                    android:layout_width="match_parent"
+                    android:gravity="center_horizontal"
+                    android:layout_marginTop="30dp"
+                    android:layout_height="wrap_content" />
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/pilih_dokumen"
                     android:text="Pilih Dokumen"
@@ -42,8 +52,15 @@
                     android:padding="10dp"
                     android:textSize="18sp"
                     android:backgroundTint="@color/warna_aku"
-                    android:layout_marginTop="20dp"
                     android:textAllCaps="false"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:text="Pilih file signature milik penandatangan"
+                    android:textSize="14sp"
+                    android:layout_width="match_parent"
+                    android:gravity="center_horizontal"
+                    android:layout_marginTop="30dp"
+                    android:layout_height="wrap_content" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/pilih_signature"
@@ -84,11 +101,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textStyle="italic"/>
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:text="Masukan pasangan kunci publik milik penandatangan, jika lupa, kamu bisa menekan tombol Isikan untuk memilih kunci publik yang sudah tersimpan aman di server dan akan mengisi otomatis bilangan e dan n"
+                    android:textSize="14sp"
+                    android:layout_width="match_parent"
+                    android:gravity="center_horizontal"
+                    android:layout_marginTop="30dp"
+                    android:layout_height="wrap_content" />
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:weightSum="2"
+                    android:weightSum="3"
                     android:orientation="horizontal">
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:layout_width="0dp"
@@ -108,8 +132,7 @@
                             android:textSize="14sp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/edit_text_bundar"
-                            android:layout_marginBottom="10dp"/>
+                            android:background="@drawable/edit_text_bundar" />
 
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -117,6 +140,7 @@
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
+                        android:layout_marginEnd="20dp"
                         android:orientation="vertical">
                         <androidx.appcompat.widget.AppCompatTextView
                             android:text="bilangan n"
@@ -130,27 +154,29 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="number"
-                            android:background="@drawable/edit_text_bundar"
-                            android:layout_marginBottom="10dp"/>
+                            android:background="@drawable/edit_text_bundar" />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/daftar_kunci_publik"
+                            android:layout_marginTop="15dp"
+                            android:text="Isikan"
+                            android:layout_width="match_parent"
+                            android:layout_height="45dp"
+                            app:cornerRadius="50dp"
+                            app:iconGravity="textStart"
+                            android:backgroundTint="@color/warna_aku"
+                            android:textAllCaps="false"/>
 
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/daftar_kunci_publik"
-                    android:text="Pilih Kunci Publik Penandatangan"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:cornerRadius="50dp"
-                    app:iconGravity="textStart"
-                    android:padding="10dp"
-                    android:textSize="18sp"
-                    android:backgroundTint="@color/warna_aku"
-                    android:textAllCaps="false"/>
-
-
-
 
 
             </androidx.appcompat.widget.LinearLayoutCompat>

@@ -66,7 +66,7 @@ public class DaftarKunciPublik extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        setTitle("Daftar Kunci Publik");
+        setTitle("Penandatangan Resmi");
 
         kunciPublikModelList = new ArrayList<>();
         kunciPublikAdapter = new KunciPublikAdapter(DaftarKunciPublik.this, kunciPublikModelList);
