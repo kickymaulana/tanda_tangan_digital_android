@@ -1,5 +1,6 @@
 package com.kickymaulana.tandatangandigital;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -95,7 +96,7 @@ public class BangkitkanKunci extends AppCompatActivity {
         bilangan_prima_p_launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
             public void onActivityResult(ActivityResult result) {
-                if (result.getResultCode() == RESULT_OK){
+                if (result.getResultCode() == RESULT_OK) {
                     bilangan_prima_p_s = result.getData().getStringExtra("bilangan_prima");
                     pilih_bilangan_prima_p.setText(bilangan_prima_p_s);
                 }
@@ -115,7 +116,7 @@ public class BangkitkanKunci extends AppCompatActivity {
         bilangan_prima_q_launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
             public void onActivityResult(ActivityResult result) {
-                if (result.getResultCode() == RESULT_OK){
+                if (result.getResultCode() == RESULT_OK) {
                     bilangan_prima_q_s = result.getData().getStringExtra("bilangan_prima");
                     pilih_bilangan_prima_q.setText(bilangan_prima_q_s);
                 }
@@ -139,7 +140,7 @@ public class BangkitkanKunci extends AppCompatActivity {
         lengkapi_rumus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (pilih_bilangan_prima_p.getText().equals("pilih bilangan") || pilih_bilangan_prima_q.getText().equals("pilih bilangan")){
+                if (pilih_bilangan_prima_p.getText().equals("pilih bilangan") || pilih_bilangan_prima_q.getText().equals("pilih bilangan")) {
                     Toast.makeText(BangkitkanKunci.this, "Silahkan pilh terlebih dahulu bilangan", Toast.LENGTH_SHORT).show();
                 } else {
                     p = Integer.valueOf(bilangan_prima_p_s);
@@ -147,7 +148,7 @@ public class BangkitkanKunci extends AppCompatActivity {
                     rumus_p.setText("p = " + p + ", q = " + q);
                     n = p * q;
                     rumus_n.setText("n = p x q = " + p + " x " + q + " = " + n);
-                    fn = (p-1) * (q-1);
+                    fn = (p - 1) * (q - 1);
                     rumus_fn.setText("f(n) = (" + p + " - 1) x (" + q + " - 1) = " + fn);
                     pilih_bilangan_e.setText("Pilih satu bilangan(e) yang relatif prima terhadap nilai f(n) = " + fn);
 
@@ -160,7 +161,7 @@ public class BangkitkanKunci extends AppCompatActivity {
         pilih_bilangan_relatif_prima_e_launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
             public void onActivityResult(ActivityResult result) {
-                if (result.getResultCode() == RESULT_OK){
+                if (result.getResultCode() == RESULT_OK) {
                     bilangan_relatif_prima_e_s = result.getData().getStringExtra("bilangan_relatif_prima");
                     pilih_bilangan_relatif_prima_e.setText(bilangan_relatif_prima_e_s);
                 }
@@ -188,7 +189,7 @@ public class BangkitkanKunci extends AppCompatActivity {
         hitung_nilai_d.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (pilih_bilangan_relatif_prima_e.getText().equals("pilih bilangan")){
+                if (pilih_bilangan_relatif_prima_e.getText().equals("pilih bilangan")) {
                     Toast.makeText(BangkitkanKunci.this, "pilih terlebih dahulu bilangan yang relatif prima", Toast.LENGTH_SHORT).show();
                 } else {
                     e_big = new BigInteger(bilangan_relatif_prima_e_s);
@@ -243,9 +244,22 @@ public class BangkitkanKunci extends AppCompatActivity {
                                         new AlertDialog.Builder(BangkitkanKunci.this)
                                                 .setMessage(pesanvalidasi)
                                                 .show();
-                                    } else if (response.get("kode").equals("200")){
+                                    } else if (response.get("kode").equals("200")) {
                                         loading.setVisibility(View.GONE);
-                                        Toast.makeText(BangkitkanKunci.this, response.get("pesan").toString(), Toast.LENGTH_SHORT).show();
+                                        new AlertDialog.Builder(BangkitkanKunci.this)
+                                                .setTitle("Berhasil disimpan")
+                                                .setMessage("Kunci publik dan kunci privat berhasil disimpan di server!\nKunci privat digunakan untuk menandatangani sebuah file pdf dan kunci publik digunakan untuk memeriksa keaslian file pdf")
+                                                .setPositiveButton("Oke", new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialog, int which) {
+                                                        dialog.dismiss();
+                                                        setResult(RESULT_OK);
+                                                        finish();
+
+                                                    }
+                                                })
+                                                .setCancelable(false)
+                                                .show();
 
                                     }
                                 } catch (JSONException e) {

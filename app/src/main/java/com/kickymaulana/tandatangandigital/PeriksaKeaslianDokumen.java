@@ -210,6 +210,7 @@ public class PeriksaKeaslianDokumen extends AppCompatActivity {
                                     dialog.dismiss();
                                 }
                             })
+                            .setCancelable(false)
                             .show();
                 } else {
                     new AlertDialog.Builder(PeriksaKeaslianDokumen.this)

@@ -7,6 +7,10 @@ import android.view.View;
 import android.widget.RelativeLayout;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -42,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
 
     RelativeLayout loading;
     MaterialButton daftar_kunci_publik;
+
+    private ActivityResultLauncher<Intent> bangkitkan_kunci_publik_launcher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,13 +119,25 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                 });
+        bangkitkan_kunci_publik_launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+            @Override
+            public void onActivityResult(ActivityResult result) {
+
+                if (result.getResultCode() == RESULT_OK) {
+                    Intent intent = getIntent();
+                    finish();
+                    startActivity(intent);
+                }
+
+            }
+        });
 
         bangkitkan_kunci = (MaterialButton) findViewById(R.id.bangkitkan_kunci);
         bangkitkan_kunci.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, BangkitkanKunci.class);
-                startActivity(intent);
+                bangkitkan_kunci_publik_launcher.launch(intent);
             }
         });
 
@@ -160,6 +178,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
 
 
     }

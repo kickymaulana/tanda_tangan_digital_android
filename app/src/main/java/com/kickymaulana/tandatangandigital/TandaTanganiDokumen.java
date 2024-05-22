@@ -136,6 +136,7 @@ public class TandaTanganiDokumen extends AppCompatActivity {
                                             finish();
                                         }
                                     })
+                                    .setCancelable(false)
                                     .show();
                         } catch (IOException e) {
                             e.printStackTrace();
