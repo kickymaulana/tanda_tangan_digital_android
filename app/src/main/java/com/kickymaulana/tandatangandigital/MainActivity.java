@@ -1,10 +1,12 @@
 package com.kickymaulana.tandatangandigital;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.activity.result.ActivityResult;
@@ -25,6 +27,7 @@ import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.button.MaterialButton;
+import com.kickymaulana.tandatangandigital.model.KunciPublikModel;
 import com.kickymaulana.tandatangandigital.sessionmanager.SessionManager;
 
 import org.json.JSONException;
@@ -46,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
     RelativeLayout loading;
     MaterialButton daftar_kunci_publik;
+    AppCompatTextView hapus_akun;
 
     private ActivityResultLauncher<Intent> bangkitkan_kunci_publik_launcher;
 
@@ -179,7 +183,78 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        hapus_akun = (AppCompatTextView) findViewById(R.id.hapus_akun);
+        hapus_akun.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new AlertDialog.Builder(MainActivity.this)
+                        .setMessage("Apakah anda yakin ingin menghapus akun?\naktivitas ini akan menghapus kunci publik dan kunci privat yang ada di server")
+                        .setCancelable(false)
+                        .setPositiveButton("Yakin", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                loading.setVisibility(View.VISIBLE);
+                                AndroidNetworking.post(sessionManager.getServer() + "api/hapus-akun")
+                                        .addBodyParameter("email", sessionManager.getUsername())
+                                        .addHeaders("Authorization", "Bearer " + sessionManager.getToken())
+                                        .setPriority(Priority.MEDIUM)
+                                        .build()
+                                        .getAsJSONObject(new JSONObjectRequestListener() {
+                                            @Override
+                                            public void onResponse(JSONObject response) {
+                                                try {
+                                                    Log.d("RESPONSEBARU", response.toString());
+                                                    if (response.get("kode").equals("200")) {
+                                                        loading.setVisibility(View.GONE);
+                                                        new AlertDialog.Builder(MainActivity.this)
+                                                                .setMessage(response.get("pesan").toString())
+                                                                .setPositiveButton("Keluar", new DialogInterface.OnClickListener() {
+                                                                    @Override
+                                                                    public void onClick(DialogInterface dialog, int which) {
+                                                                        dialog.dismiss();
+                                                                        sessionManager.logout();
+                                                                        Intent intent = new Intent(MainActivity.this, Login.class);
+                                                                        startActivity(intent);
+                                                                        finish();
+                                                                    }
+                                                                })
+                                                                .show();
 
+                                                    } else if (response.get("kode").equals("401")) {
+                                                        loading.setVisibility(View.GONE);
+                                                        sessionManager.logout();
+                                                        Intent intent = new Intent(MainActivity.this, Login.class);
+                                                        startActivity(intent);
+                                                        finish();
+                                                    } else {
+                                                        Toast.makeText(MainActivity.this, "ada kesalahan lain", Toast.LENGTH_SHORT).show();
+                                                        loading.setVisibility(View.GONE);
+                                                    }
+                                                } catch (JSONException e) {
+                                                    e.printStackTrace();
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onError(ANError anError) {
+                                                loading.setVisibility(View.GONE);
+                                                Toast.makeText(MainActivity.this, "ada kesalahan lain", Toast.LENGTH_SHORT).show();
+
+                                            }
+                                        });
+
+                            }
+                        })
+                        .setNegativeButton("Batal", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .show();
+
+            }
+        });
 
     }
 }

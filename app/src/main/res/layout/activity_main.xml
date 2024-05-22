@@ -228,6 +228,15 @@
                     android:backgroundTint="@color/warna_aku"
                     android:textAllCaps="false"/>
 
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/hapus_akun"
+                    android:text="Hapus akun"
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="30dp"
+                    android:textColor="#C8E1E6"
+                    android:layout_height="wrap_content"/>
+
             </androidx.appcompat.widget.LinearLayoutCompat>
 
         </RelativeLayout>
