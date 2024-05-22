@@ -18,6 +18,7 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.AppCompatEditText;
@@ -124,6 +125,18 @@ public class TandaTanganiDokumen extends AppCompatActivity {
                         Uri uri = data.getData();
                         try {
                             saveStringToFile(uri, stringToSave);
+                            Log.d("BERHASIL", "BERHASIL MENYIMPAN FILE");
+                            new AlertDialog.Builder(TandaTanganiDokumen.this)
+                                    .setTitle("File berhasil ditandatangani")
+                                    .setMessage("Silahkan berikan file pdf beserta signature yang sudah dibuat ke orang yang ingin memeriksa apakah file pdf yang sudah kamu tandatangani asli dan benar-benar sudah ditandatangani")
+                                    .setPositiveButton("Oke", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.dismiss();
+                                            finish();
+                                        }
+                                    })
+                                    .show();
                         } catch (IOException e) {
                             e.printStackTrace();
                         }

@@ -23,15 +23,24 @@
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:padding="20dp">
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:text="Gunakan pasangan kunci privat anda yaitu pasangan nilai d dan n untuk menandatangani dokumen"
+                    android:text="Untuk menandatangani file pdf, membutuhkan file pdf yang akan ditandatangani dan pasangan kunci privat milik anda"
                     android:textSize="14sp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
                     android:layout_marginBottom="10dp"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:text="Pilih file pdf yang akan ditandatangani"
+                    android:textSize="14sp"
+                    android:layout_width="match_parent"
+                    android:gravity="center_horizontal"
+                    android:layout_marginTop="30dp"
+                    android:layout_height="wrap_content" />
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/pilih_dokumen"
                     android:text="Pilih Dokumen"
@@ -41,7 +50,6 @@
                     app:iconGravity="textStart"
                     android:padding="10dp"
                     android:textSize="18sp"
-                    android:layout_marginTop="20dp"
                     android:backgroundTint="@color/warna_aku"
                     android:textAllCaps="false"/>
 
@@ -53,11 +61,19 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:textStyle="italic"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:text="Masukan pasangan kunci privat anda, jika lupa, kamu bisa menekan tombol Isikan untuk mengambil kunci privat yang sudah tersimpan aman di server dan akan mengisi otomatis bilangan d dan n"
+                    android:textSize="14sp"
+                    android:layout_width="match_parent"
+                    android:gravity="center_horizontal"
+                    android:layout_marginTop="30dp"
+                    android:layout_height="wrap_content" />
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:weightSum="2"
+                    android:weightSum="3"
                     android:orientation="horizontal">
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:layout_width="0dp"
@@ -77,8 +93,7 @@
                             android:textSize="14sp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/edit_text_bundar"
-                            android:layout_marginBottom="10dp"/>
+                            android:background="@drawable/edit_text_bundar" />
 
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -86,6 +101,7 @@
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
+                        android:layout_marginEnd="20dp"
                         android:orientation="vertical">
                         <androidx.appcompat.widget.AppCompatTextView
                             android:text="bilangan n"
@@ -99,24 +115,28 @@
                             android:inputType="number"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/edit_text_bundar"
-                            android:layout_marginBottom="10dp"/>
+                            android:background="@drawable/edit_text_bundar" />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/lengkapi_kunci_privat"
+                            android:layout_marginTop="15dp"
+                            android:text="Isikan"
+                            android:layout_width="match_parent"
+                            android:layout_height="45dp"
+                            app:cornerRadius="50dp"
+                            app:iconGravity="textStart"
+                            android:backgroundTint="@color/warna_aku"
+                            android:textAllCaps="false"/>
 
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/lengkapi_kunci_privat"
-                    android:text="Lengkapi Kunci Privat"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:cornerRadius="50dp"
-                    app:iconGravity="textStart"
-                    android:padding="10dp"
-                    android:textSize="18sp"
-                    android:backgroundTint="@color/warna_aku"
-                    android:textAllCaps="false"/>
 
 
 
