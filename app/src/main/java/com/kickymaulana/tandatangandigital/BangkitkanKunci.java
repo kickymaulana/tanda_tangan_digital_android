@@ -149,8 +149,8 @@ public class BangkitkanKunci extends AppCompatActivity {
                     n = p * q;
                     rumus_n.setText("n = p x q = " + p + " x " + q + " = " + n);
                     fn = (p - 1) * (q - 1);
-                    rumus_fn.setText("f(n) = (" + p + " - 1) x (" + q + " - 1) = " + fn);
-                    pilih_bilangan_e.setText("Pilih satu bilangan(e) yang relatif prima terhadap nilai f(n) = " + fn);
+                    rumus_fn.setText("\u03C6(n) = (" + p + " - 1) x (" + q + " - 1) = " + fn);
+                    pilih_bilangan_e.setText("Pilih satu bilangan(e) yang relatif prima terhadap nilai \u03C6(n) = " + fn);
 
                 }
 

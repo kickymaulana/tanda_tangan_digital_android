@@ -110,7 +110,7 @@
                     android:layout_marginBottom="10dp"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:text="f(n) = (p-1) x (q-1)"
+                    android:text="&#x03C6;(n) = (p-1) x (q-1)"
                     android:textSize="14sp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -118,7 +118,7 @@
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/rumus_fn"
-                    android:text="f(n) = (p-1) x (q-1)"
+                    android:text="&#x03C6;(n) = (p-1) x (q-1)"
                     android:textSize="14sp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -127,7 +127,7 @@
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/pilih_bilangan_e"
-                    android:text="Pilih satu bilangan(e) yang relatif prima terhadap nilai f(n)"
+                    android:text="Pilih satu bilangan(e) yang relatif prima terhadap nilai &#x03C6;(n)"
                     android:textSize="14sp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -162,16 +162,13 @@
                     android:backgroundTint="@color/warna_aku"
                     android:textAllCaps="false"/>
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:text="d = 1 + (k x f(n)) / e"
-                    android:textSize="14sp"
-                    android:layout_width="wrap_content"
+                <ImageView
+                    android:layout_width="200dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
-                    android:textStyle="italic"/>
+                    android:src="@drawable/mencari_nilai_d"/>
+
                 <androidx.appcompat.widget.AppCompatTextView
                     android:text="Nilai k akan dinaikan dari 1, 2, 3 dan seterusnya sampai didapati nilai d adalah bilangan bulat.\nSetelah proses perulangan beberapa kali, maka didapat nilai d adalah"
-
                     android:textSize="14sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
