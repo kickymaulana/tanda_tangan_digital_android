@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
     RelativeLayout loading;
     MaterialButton daftar_kunci_publik;
+    MaterialButton list_dokumen;
     AppCompatTextView hapus_akun;
 
     private ActivityResultLauncher<Intent> bangkitkan_kunci_publik_launcher;
@@ -179,6 +180,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, DaftarKunciPublik.class);
+                startActivity(intent);
+            }
+        });
+
+        list_dokumen = (MaterialButton) findViewById(R.id.list_dokumen);
+        list_dokumen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, Dokumen.class);
                 startActivity(intent);
             }
         });
