@@ -40,9 +40,9 @@ public class DokumenAdapter extends RecyclerView.Adapter<DokumenAdapter.DokumenH
     @Override
     public void onBindViewHolder(@NonNull DokumenHolder holder, int position) {
 
-        holder.nama.setText(dokumenModelList.get(position).getNama());
         holder.dokumen.setText(dokumenModelList.get(position).getDokumen());
-        holder.ditandatangani.setText(dokumenModelList.get(position).getDitandatangani());
+        holder.signature.setText(dokumenModelList.get(position).getSignature());
+        holder.keterangan.setText(dokumenModelList.get(position).getNama() + " " + dokumenModelList.get(position).getDitandatangani());
         holder.card_dokumen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,15 +65,15 @@ public class DokumenAdapter extends RecyclerView.Adapter<DokumenAdapter.DokumenH
     class DokumenHolder extends RecyclerView.ViewHolder{
 
         CardView card_dokumen;
-        AppCompatTextView dokumen, nama, ditandatangani;
+        AppCompatTextView dokumen, signature, keterangan;
 
         public DokumenHolder(@NonNull View itemView) {
             super(itemView);
 
             card_dokumen = (CardView) itemView.findViewById(R.id.card_dokumen);
             dokumen = (AppCompatTextView) itemView.findViewById(R.id.dokumen);
-            nama = (AppCompatTextView) itemView.findViewById(R.id.nama);
-            ditandatangani = (AppCompatTextView) itemView.findViewById(R.id.ditandatangani);
+            signature = (AppCompatTextView) itemView.findViewById(R.id.signature);
+            keterangan = (AppCompatTextView) itemView.findViewById(R.id.keterangan);
         }
     }
 }
