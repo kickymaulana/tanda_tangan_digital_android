@@ -47,6 +47,7 @@ public class DokumenAdapter extends RecyclerView.Adapter<DokumenAdapter.DokumenH
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, DokumenShow.class);
+                intent.putExtra("id", dokumenModelList.get(position).getId());
                 intent.putExtra("nama", dokumenModelList.get(position).getNama());
                 intent.putExtra("dokumen", dokumenModelList.get(position).getDokumen());
                 intent.putExtra("signature", dokumenModelList.get(position).getSignature());

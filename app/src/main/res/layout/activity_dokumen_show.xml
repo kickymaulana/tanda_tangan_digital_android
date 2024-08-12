@@ -126,6 +126,30 @@
                     android:backgroundTint="@color/warna_aku"
                     android:textAllCaps="false"/>
 
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/bagikan"
+                    android:text="Bagikan"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cornerRadius="50dp"
+                    app:iconGravity="textStart"
+                    android:padding="10dp"
+                    android:textSize="18sp"
+                    android:backgroundTint="@color/warna_aku"
+                    android:textAllCaps="false"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/salin_link"
+                    android:text="Salin Link"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cornerRadius="50dp"
+                    app:iconGravity="textStart"
+                    android:padding="10dp"
+                    android:textSize="18sp"
+                    android:backgroundTint="@color/warna_aku"
+                    android:textAllCaps="false"/>
+
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
