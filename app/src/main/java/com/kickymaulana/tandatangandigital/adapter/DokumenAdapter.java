@@ -2,15 +2,19 @@ package com.kickymaulana.tandatangandigital.adapter;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.kickymaulana.tandatangandigital.Dokumen;
+import com.kickymaulana.tandatangandigital.DokumenShow;
 import com.kickymaulana.tandatangandigital.R;
 import com.kickymaulana.tandatangandigital.model.DokumenModel;
 
@@ -38,16 +42,17 @@ public class DokumenAdapter extends RecyclerView.Adapter<DokumenAdapter.DokumenH
 
         holder.nama.setText(dokumenModelList.get(position).getNama());
         holder.dokumen.setText(dokumenModelList.get(position).getDokumen());
-        holder.signature.setText(dokumenModelList.get(position).getSignature());
         holder.ditandatangani.setText(dokumenModelList.get(position).getDitandatangani());
         holder.card_dokumen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*Intent intent = new Intent();
-                intent.putExtra("bilangan_e", kunciPublikModelList.get(position).getBilangan_e());
-                intent.putExtra("bilangan_n", kunciPublikModelList.get(position).getBilangan_n());
-                ((DaftarKunciPublik) context).setResult(RESULT_OK, intent);
-                ((DaftarKunciPublik) context).finish();*/
+                Intent intent = new Intent(context, DokumenShow.class);
+                intent.putExtra("nama", dokumenModelList.get(position).getNama());
+                intent.putExtra("dokumen", dokumenModelList.get(position).getDokumen());
+                intent.putExtra("signature", dokumenModelList.get(position).getSignature());
+                intent.putExtra("ditandatangani", dokumenModelList.get(position).getDitandatangani());
+                ((Dokumen) context).startActivity(intent);
+
             }
         });
     }
@@ -60,14 +65,13 @@ public class DokumenAdapter extends RecyclerView.Adapter<DokumenAdapter.DokumenH
     class DokumenHolder extends RecyclerView.ViewHolder{
 
         CardView card_dokumen;
-        AppCompatTextView dokumen, signature, nama, ditandatangani;
+        AppCompatTextView dokumen, nama, ditandatangani;
 
         public DokumenHolder(@NonNull View itemView) {
             super(itemView);
 
             card_dokumen = (CardView) itemView.findViewById(R.id.card_dokumen);
             dokumen = (AppCompatTextView) itemView.findViewById(R.id.dokumen);
-            signature = (AppCompatTextView) itemView.findViewById(R.id.signature);
             nama = (AppCompatTextView) itemView.findViewById(R.id.nama);
             ditandatangani = (AppCompatTextView) itemView.findViewById(R.id.ditandatangani);
         }
