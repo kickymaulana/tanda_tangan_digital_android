@@ -149,6 +149,23 @@
     </ScrollView>
 
     <com.google.android.material.button.MaterialButton
+        android:id="@+id/simpan_ke_server"
+        android:text="Simpan Ke server"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_above="@+id/tandatangani_dokumen"
+        app:cornerRadius="50dp"
+        app:iconGravity="textStart"
+        android:padding="10dp"
+        android:textSize="18sp"
+        android:backgroundTint="@color/warna_aku"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="10dp"
+        android:textAllCaps="false"/>
+
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/tandatangani_dokumen"
         android:text="Tandatangani Dokumen"
         android:layout_width="match_parent"

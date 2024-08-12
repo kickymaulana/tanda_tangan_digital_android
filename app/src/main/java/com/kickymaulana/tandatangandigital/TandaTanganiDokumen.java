@@ -1,12 +1,17 @@
 package com.kickymaulana.tandatangandigital;
 
 import android.Manifest;
+import android.content.ContentUris;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.DocumentsContract;
+import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.util.Log;
 import android.view.MenuItem;
@@ -29,15 +34,24 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.button.MaterialButton;
+import com.kickymaulana.tandatangandigital.model.KunciPublikModel;
 import com.kickymaulana.tandatangandigital.sessionmanager.SessionManager;
 
 import android.net.Uri;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -60,9 +74,16 @@ public class TandaTanganiDokumen extends AppCompatActivity {
     String SHA256 = "kosong";
     String CHIPERTEXT;
     Uri uri_hasil;
+    Uri uri_signature;
     private String stringToSave;
 
+    File dokumen1;
+    File signature1;
+
     SessionManager sessionManager;
+    MaterialButton simpan_ke_server;
+
+    RelativeLayout loading;
 
 
     private ActivityResultLauncher<Intent> openFileLauncher;
@@ -84,7 +105,10 @@ public class TandaTanganiDokumen extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        loading = (RelativeLayout) findViewById(R.id.loading);
         sessionManager = new SessionManager(TandaTanganiDokumen.this);
+        simpan_ke_server = (MaterialButton) findViewById(R.id.simpan_ke_server);
+        simpan_ke_server.setVisibility(View.GONE);
 
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         requestPermissions();
@@ -106,6 +130,7 @@ public class TandaTanganiDokumen extends AppCompatActivity {
                             SHA256 = hash;
                             nama_file.setText(getFileNameFromUri(uri_hasil));
                             s_link_pdf = uri_hasil.getPath();
+
                         } catch (IOException | NoSuchAlgorithmException e) {
                             e.printStackTrace();
                         }
@@ -123,6 +148,8 @@ public class TandaTanganiDokumen extends AppCompatActivity {
                     Intent data = result.getData();
                     if (data != null) {
                         Uri uri = data.getData();
+                        uri_signature = uri;
+                        simpan_ke_server.setVisibility(View.VISIBLE);
                         try {
                             saveStringToFile(uri, stringToSave);
                             Log.d("BERHASIL", "BERHASIL MENYIMPAN FILE");
@@ -133,7 +160,7 @@ public class TandaTanganiDokumen extends AppCompatActivity {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
                                             dialog.dismiss();
-                                            finish();
+                                            //finish();
                                         }
                                     })
                                     .setCancelable(false)
@@ -255,6 +282,63 @@ public class TandaTanganiDokumen extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(TandaTanganiDokumen.this, AmbilKunciPrivat.class);
                 lengkapi_kunci_privat_launcher.launch(intent);
+
+            }
+        });
+
+        simpan_ke_server.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+
+
+                loading.setVisibility(View.VISIBLE);
+                try {
+                    AndroidNetworking.upload(sessionManager.getServer() + "api/dokumen/store")
+                            .addMultipartFile("dokumen", createFileFromUri(TandaTanganiDokumen.this, uri_hasil))
+                            .addMultipartFile("signature",createFileFromUri(TandaTanganiDokumen.this, uri_signature))
+                            .addMultipartParameter("user_email", sessionManager.getUsername())
+                            .addHeaders("Authorization", "Bearer " + sessionManager.getToken())
+                            .setPriority(Priority.MEDIUM)
+                            .build()
+                            .getAsJSONObject(new JSONObjectRequestListener() {
+                                @Override
+                                public void onResponse(JSONObject response) {
+                                    try {
+                                        Log.d("RESPONSE", response.toString());
+                                        if (response.get("kode").equals("200")) {
+
+                                            loading.setVisibility(View.GONE);
+                                            Toast.makeText(TandaTanganiDokumen.this, "berhasil diupload", Toast.LENGTH_SHORT).show();
+                                            Intent intent = new Intent(TandaTanganiDokumen.this, Dokumen.class);
+                                            startActivity(intent);
+                                            finish();
+                                        } else if (response.get("kode").equals("401")) {
+                                            loading.setVisibility(View.GONE);
+                                            sessionManager.logout();
+                                            Intent intent = new Intent(TandaTanganiDokumen.this, Login.class);
+                                            startActivity(intent);
+                                            finish();
+                                        } else {
+                                            Toast.makeText(TandaTanganiDokumen.this, "ada kesalahan lain", Toast.LENGTH_SHORT).show();
+                                            loading.setVisibility(View.GONE);
+                                        }
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+
+                                @Override
+                                public void onError(ANError anError) {
+                                    loading.setVisibility(View.GONE);
+                                    Log.d("ADAERROR", anError.getMessage());
+                                    Toast.makeText(TandaTanganiDokumen.this, "ada kesalahan lain", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
 
             }
         });
@@ -388,4 +472,20 @@ public class TandaTanganiDokumen extends AppCompatActivity {
             // Semua izin diberikan
         }
     }
+
+    public File createFileFromUri(Context context, Uri uri) throws IOException {
+        File tempFile = File.createTempFile("tempFile", ".pdf", context.getCacheDir());
+        try (InputStream inputStream = context.getContentResolver().openInputStream(uri);
+             OutputStream outputStream = new FileOutputStream(tempFile)) {
+
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = inputStream.read(buffer)) > 0) {
+                outputStream.write(buffer, 0, length);
+            }
+        }
+        return tempFile;
+    }
+
+
 }
