@@ -1,8 +1,13 @@
 package com.kickymaulana.tandatangandigital;
 
+import android.app.DownloadManager;
+import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.RelativeLayout;
 
 import androidx.activity.EdgeToEdge;
@@ -27,7 +32,6 @@ public class DokumenShow extends AppCompatActivity {
 
     SessionManager sessionManager;
     RelativeLayout loading;
-
 
 
     @Override
@@ -62,12 +66,58 @@ public class DokumenShow extends AppCompatActivity {
         dokumen.setText(intent.getStringExtra("dokumen"));
         signature.setText(intent.getStringExtra("signature"));
         ditandatangani.setText(intent.getStringExtra("ditandatangani"));
+
+        download_dokumen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // URL yang ingin dibuka
+                String url = sessionManager.getServer() + "storage/dokumen/" + dokumen.getText().toString();
+
+                // Intent untuk membuka link
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(url));
+
+                // Mulai aktivitas
+                startActivity(intent);
+            }
+        });
+
+        download_signature.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // URL yang ingin dibuka
+                String url = sessionManager.getServer() + "signature/" + signature.getText().toString();
+
+                // Intent untuk membuka link
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(url));
+
+                // Mulai aktivitas
+                startActivity(intent);
+            }
+        });
     }
+
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemid = item.getItemId();
         if (itemid == android.R.id.home) {
             finish();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void startDownload(String url) {
+        // Membuat request untuk download
+        DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
+        request.setTitle("Mengunduh File .txt");
+        request.setDescription("Mengunduh file dari " + url);
+        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+
+        // Tentukan lokasi penyimpanan file yang diunduh
+        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "file.txt");
+
+        // Mendapatkan instance DownloadManager dan mulai unduhan
+        DownloadManager downloadManager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
+        downloadManager.enqueue(request);
     }
 }
