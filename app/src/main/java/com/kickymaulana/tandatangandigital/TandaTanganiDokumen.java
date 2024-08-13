@@ -474,7 +474,8 @@ public class TandaTanganiDokumen extends AppCompatActivity {
     }
 
     public File createFileFromUri(Context context, Uri uri, String namafile, String type) throws IOException {
-        File tempFile = File.createTempFile(namafile, type, context.getCacheDir());
+        File tempFile = new File(context.getCacheDir(), namafile);
+        //File tempFile = File.createTempFile(namafile, type);
         try (InputStream inputStream = context.getContentResolver().openInputStream(uri);
              OutputStream outputStream = new FileOutputStream(tempFile)) {
 
