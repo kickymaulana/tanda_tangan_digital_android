@@ -22,13 +22,17 @@
             android:id="@+id/dokumen"
             android:text="alamak.pdf"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:textSize="10dp"
+            android:layout_marginBottom="5dp"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/signature"
             android:text="alamak.txt"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:textSize="10dp"
+            android:layout_marginBottom="5dp"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/keterangan"

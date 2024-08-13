@@ -296,8 +296,8 @@ public class TandaTanganiDokumen extends AppCompatActivity {
                 loading.setVisibility(View.VISIBLE);
                 try {
                     AndroidNetworking.upload(sessionManager.getServer() + "api/dokumen/store")
-                            .addMultipartFile("dokumen", createFileFromUri(TandaTanganiDokumen.this, uri_hasil))
-                            .addMultipartFile("signature",createFileFromUri(TandaTanganiDokumen.this, uri_signature))
+                            .addMultipartFile("dokumen", createFileFromUri(TandaTanganiDokumen.this, uri_hasil, getFileNameFromUri(uri_hasil), ".pdf"))
+                            .addMultipartFile("signature",createFileFromUri(TandaTanganiDokumen.this, uri_signature, getFileNameFromUri(uri_signature), ".txt"))
                             .addMultipartParameter("user_email", sessionManager.getUsername())
                             .addHeaders("Authorization", "Bearer " + sessionManager.getToken())
                             .setPriority(Priority.MEDIUM)
@@ -473,8 +473,8 @@ public class TandaTanganiDokumen extends AppCompatActivity {
         }
     }
 
-    public File createFileFromUri(Context context, Uri uri) throws IOException {
-        File tempFile = File.createTempFile("tempFile", ".pdf", context.getCacheDir());
+    public File createFileFromUri(Context context, Uri uri, String namafile, String type) throws IOException {
+        File tempFile = File.createTempFile(namafile, type, context.getCacheDir());
         try (InputStream inputStream = context.getContentResolver().openInputStream(uri);
              OutputStream outputStream = new FileOutputStream(tempFile)) {
 
