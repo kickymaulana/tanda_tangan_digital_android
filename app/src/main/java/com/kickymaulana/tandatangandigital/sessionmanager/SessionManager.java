@@ -16,7 +16,8 @@ public class SessionManager {
     }
 
     public String getServer(){
-        return sharedPreferences.getString("server", "https://tandatangandigital.kickymaulana.com/");
+        return sharedPreferences.getString("server", "http://10.0.2.2:8081/tanda_tangan_digital_laravel/public/");
+        //return sharedPreferences.getString("server", "http://192.168.8.100:8081/tanda_tangan_digital_laravel/public/");
     }
 
     public void setServer(String server){
